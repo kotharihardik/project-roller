@@ -1,0 +1,275 @@
+@startuml Permission Management - LLM Analysis
+
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FEFEFE
+skinparam class {
+    BackgroundColor #F8F8F8
+    BorderColor #666666
+    ArrowColor #333333
+}
+
+title Apache Roller - Permission Management Classes (LLM Analysis)\nUser and Role Management Subsystem - Medium Scope Focus
+
+package "java.security" <<external>> #EEEEEE {
+    abstract class Permission {
+        # name: String
+        + getName(): String
+        + {abstract} implies(permission: Permission): boolean
+        + {abstract} getActions(): String
+    }
+}
+
+package "org.apache.roller.weblogger.pojos" #DDDDFF {
+    
+    abstract class RollerPermission {
+        - log: Log
+        __
+        + RollerPermission(name: String)
+        + {abstract} setActions(actions: String): void
+        + {abstract} getActions(): String
+        + getActionsAsList(): List<String>
+        + setActionsAsList(actionsList: List<String>): void
+        + hasAction(action: String): boolean
+        + hasActions(actionsToCheck: List<String>): boolean
+        + addActions(perm: ObjectPermission): void
+        + addActions(newActions: List<String>): void
+        + removeActions(actionsToRemove: List<String>): void
+        + isEmpty(): boolean
+    }
+    
+    class GlobalPermission #FFFFCC {
+        - actions: String
+        + {static} LOGIN: String = "login"
+        + {static} WEBLOG: String = "weblog"
+        + {static} ADMIN: String = "admin"
+        __
+        + GlobalPermission(user: User)
+        + GlobalPermission(actions: List<String>)
+        + GlobalPermission(user: User, actions: List<String>)
+        + implies(perm: Permission): boolean
+        - actionImplies(action1: String, action2: String): boolean
+        + getActions(): String
+        + setActions(actions: String): void
+    }
+    
+    abstract class ObjectPermission {
+        # id: String
+        # userName: String
+        # objectType: String
+        # objectId: String
+        # pending: boolean
+        # dateCreated: Date
+        # actions: String
+        __
+        + ObjectPermission()
+        + ObjectPermission(name: String)
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(username: String): void
+        + getObjectId(): String
+        + setObjectId(objectId: String): void
+        + getDateCreated(): Date
+        + setDateCreated(dateCreated: Date): void
+        + isPending(): boolean
+        + setPending(pending: boolean): void
+        + getActions(): String
+        + setActions(actions: String): void
+    }
+    
+    class WeblogPermission #CCFFCC {
+        + {static} EDIT_DRAFT: String = "edit_draft"
+        + {static} POST: String = "post"
+        + {static} ADMIN: String = "admin"
+        + {static} ALL_ACTIONS: List<String>
+        __
+        + WeblogPermission()
+        + WeblogPermission(weblog: Weblog, user: User, actions: String)
+        + WeblogPermission(weblog: Weblog, user: User, actions: List<String>)
+        + WeblogPermission(weblog: Weblog, actions: List<String>)
+        + getWeblog(): Weblog
+        + getUser(): User
+        + implies(perm: Permission): boolean
+    }
+    
+    class UserRole #FFDDDD {
+        - id: String
+        - userName: String
+        - role: String
+        __
+        + UserRole()
+        + UserRole(username: String, role: String)
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getRole(): String
+        + setRole(role: String): void
+    }
+    
+    class User #E8E8FF {
+        - id: String
+        - userName: String
+        - password: String
+        - screenName: String
+        - fullName: String
+        - emailAddress: String
+        - enabled: Boolean
+        - dateCreated: Date
+        __
+        + getId(): String
+        + getUserName(): String
+        + getEnabled(): Boolean
+        ...
+    }
+    
+    class Weblog #FFE8E8 {
+        - id: String
+        - handle: String
+        - name: String
+        - visible: Boolean
+        - active: Boolean
+        __
+        + getId(): String
+        + getHandle(): String
+        + getName(): String
+        + getCreator(): User
+        + hasUserPermission(user: User, action: String): boolean
+        ...
+    }
+}
+
+package "org.apache.roller.weblogger.business" #FFDDDD {
+    
+    interface UserManager <<interface>> {
+        __Permission Operations__
+        + checkPermission(perm: RollerPermission, user: User): boolean
+        + grantWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + grantWeblogPermissionPending(weblog: Weblog, user: User, actions: List<String>): void
+        + confirmWeblogPermission(weblog: Weblog, user: User): void
+        + declineWeblogPermission(weblog: Weblog, user: User): void
+        + revokeWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + getWeblogPermission(weblog: Weblog, user: User): WeblogPermission
+        + getWeblogPermissions(user: User): List<WeblogPermission>
+        + getWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + getPendingWeblogPermissions(user: User): List<WeblogPermission>
+        + getPendingWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + getWeblogPermissionIncludingPending(weblog: Weblog, user: User): WeblogPermission
+        __Role Operations__
+        + grantRole(roleName: String, user: User): void
+        + revokeRole(roleName: String, user: User): void
+        + hasRole(roleName: String, user: User): boolean
+        + getRoles(user: User): List<String>
+    }
+}
+
+package "org.apache.roller.weblogger.business.jpa" #DDFFDD {
+    
+    class JPAUserManagerImpl {
+        - strategy: JPAPersistenceStrategy
+        - userNameToIdMap: Map<String, String>
+        __Permission Implementation__
+        + checkPermission(perm: RollerPermission, user: User): boolean
+        + grantWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + grantWeblogPermissionPending(weblog: Weblog, user: User, actions: List<String>): void
+        + confirmWeblogPermission(weblog: Weblog, user: User): void
+        + declineWeblogPermission(weblog: Weblog, user: User): void
+        + revokeWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + getWeblogPermission(weblog: Weblog, user: User): WeblogPermission
+        __Role Implementation__
+        + hasRole(roleName: String, user: User): boolean
+        + grantRole(roleName: String, user: User): void
+        + revokeRole(roleName: String, user: User): void
+        + getRoles(user: User): List<String>
+    }
+    
+    class JPAPersistenceStrategy {
+        + store(obj: Object): void
+        + remove(obj: Object): void
+        + load(clazz: Class, id: String): Object
+        + getNamedQuery(name: String, clazz: Class): TypedQuery
+        + flush(): void
+    }
+}
+
+' ========== Inheritance Relationships ==========
+Permission <|-- RollerPermission : extends
+RollerPermission <|-- GlobalPermission : extends
+RollerPermission <|-- ObjectPermission : extends
+ObjectPermission <|-- WeblogPermission : extends
+
+' ========== Implementation Relationships ==========
+UserManager <|.. JPAUserManagerImpl : implements
+
+' ========== Composition/Aggregation ==========
+JPAUserManagerImpl *-- JPAPersistenceStrategy : uses
+
+' ========== Association Relationships ==========
+User "1" -- "*" UserRole : has roles >
+User "1" -- "*" WeblogPermission : has permissions >
+Weblog "1" -- "*" WeblogPermission : grants permissions >
+Weblog "*" -- "1" User : owned by <
+
+' ========== Dependency Relationships ==========
+GlobalPermission ..> User : references
+WeblogPermission ..> User : references
+WeblogPermission ..> Weblog : references
+JPAUserManagerImpl ..> WeblogPermission : manages
+JPAUserManagerImpl ..> UserRole : manages
+JPAUserManagerImpl ..> GlobalPermission : creates
+
+' ========== Notes ==========
+note right of GlobalPermission
+  **Global Permission Hierarchy:**
+  ┌─────────┐
+  │  ADMIN  │ ← implies all below
+  ├─────────┤
+  │  WEBLOG │ ← implies LOGIN
+  ├─────────┤
+  │  LOGIN  │ ← base permission
+  └─────────┘
+end note
+
+note right of WeblogPermission
+  **Weblog Permission Hierarchy:**
+  ┌────────────┐
+  │   ADMIN    │ ← full weblog admin
+  ├────────────┤
+  │    POST    │ ← can publish posts
+  ├────────────┤
+  │ EDIT_DRAFT │ ← can create drafts
+  └────────────┘
+end note
+
+note bottom of JPAUserManagerImpl
+  **LLM Analysis - Design Issues:**
+  • SRP Violation: 631 lines of code
+  • Handles User, Permission, and Role operations
+  
+  **Suggested Refactoring:**
+  Split into:
+  1. JPAUserCrudManager
+  2. JPAPermissionManager  
+  3. JPARoleManager
+end note
+
+note left of RollerPermission
+  **Template Method Pattern:**
+  Defines skeleton of permission
+  operations. Subclasses implement:
+  • setActions()
+  • getActions()
+  • implies()
+end note
+
+legend right
+  |= Color |= Component Type |
+  | <#FFFFCC> | Global Permission |
+  | <#CCFFCC> | Weblog Permission |
+  | <#FFDDDD> | Role Entity |
+  | <#E8E8FF> | User Entity |
+  | <#FFE8E8> | Weblog Entity |
+endlegend
+
+@enduml

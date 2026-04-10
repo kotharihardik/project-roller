@@ -1,0 +1,47 @@
+<%-- filepath: app/src/main/webapp/WEB-INF/velocity/templates/notification/bug-report-deleted-user.vm --%>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"/>
+<style>
+  body{margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;font-size:14px;color:#333;}
+  .wrap{max-width:620px;margin:30px auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .hdr{background:#777;color:#fff;padding:20px 24px;}
+  .hdr h2{margin:0;font-size:20px;}
+  .hdr p{margin:4px 0 0;font-size:13px;opacity:.85;}
+  .body{padding:24px;}
+  table.info{width:100%;border-collapse:collapse;margin:16px 0;}
+  table.info td{padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top;}
+  table.info td.lbl{width:140px;font-weight:bold;color:#555;white-space:nowrap;}
+  .contact{background:#f9f9f9;border:1px solid #ddd;border-radius:4px;padding:12px 14px;margin-top:16px;font-size:13px;}
+  .ftr{background:#f5f5f5;padding:12px 24px;font-size:11px;color:#999;border-top:1px solid #e5e5e5;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h2>Your Bug Report Has Been Removed</h2>
+    <p>A report associated with your account was deleted</p>
+  </div>
+  <div class="body">
+    <p>Hi <strong>$report.creator.screenName</strong>,</p>
+    <p>Your bug report has been removed by an administrator.</p>
+
+    <table class="info">
+      <tr><td class="lbl">Title</td><td><strong>$report.title</strong></td></tr>
+      <tr><td class="lbl">Category</td><td>$report.category</td></tr>
+      <tr><td class="lbl">Severity</td><td>$report.severity</td></tr>
+      <tr><td class="lbl">Submitted</td><td>$report.createdAt</td></tr>
+    </table>
+
+    <div class="contact">
+      &#x2139;&#xFE0F; If you believe this was removed in error, please contact
+      the site administrator. You are welcome to submit a new report if the
+      issue still exists.
+    </div>
+  </div>
+  <div class="ftr">
+    Apache Roller Bug Tracker &mdash; Automated Notification &mdash; Do not reply
+  </div>
+</div>
+</body>
+</html>

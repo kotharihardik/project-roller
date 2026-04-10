@@ -1,0 +1,955 @@
+Project Name,Package Name,Type Name,Method Name,Code Smell
+java,org.apache.roller.planet.business,PlanetManager,getEntries,Long Parameter List
+java,org.apache.roller.planet.business.fetcher,RomeFeedFetcher,RomeFeedFetcher,Magic Number
+java,org.apache.roller.planet.business.fetcher,RomeFeedFetcher,fetchSubscription,Complex Conditional
+java,org.apache.roller.planet.business.fetcher,RomeFeedFetcher,fetchSubscription,Complex Method
+java,org.apache.roller.planet.business.fetcher,RomeFeedFetcher,buildEntry,Complex Method
+java,org.apache.roller.planet.business.jpa,JPAPlanetImpl,JPAPlanetImpl,Long Parameter List
+java,org.apache.roller.planet.business.jpa,JPAPlanetManagerImpl,getGroup,Magic Number
+java,org.apache.roller.planet.business.jpa,JPAPlanetManagerImpl,getEntries,Long Parameter List
+java,org.apache.roller.planet.business.jpa,JPAPlanetManagerImpl,getEntries,Long Statement
+java,org.apache.roller.planet.business.updater,SingleThreadedFeedUpdater,updateSubscription,Complex Conditional
+java,org.apache.roller.planet.business.updater,SingleThreadedFeedUpdater,updateSubscription,Long Statement
+java,org.apache.roller.planet.business.updater,SingleThreadedFeedUpdater,updateSubscription,Long Statement
+java,org.apache.roller.planet.pojos,PlanetGroup,getRecentEntries,Magic Number
+java,org.apache.roller.planet.util,MailUtil,sendMessage,Complex Method
+java,org.apache.roller.planet.util,MailUtil,sendMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendTextMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendTextMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendTextMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendHTMLMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendHTMLMessage,Long Parameter List
+java,org.apache.roller.planet.util,MailUtil,sendHTMLMessage,Long Parameter List
+java,org.apache.roller.util,DateUtil,getNoonOfDay,Magic Number
+java,org.apache.roller.util,DateUtil,formatIso8601,Magic Number
+java,org.apache.roller.util,DateUtil,formatIso8601,Magic Number
+java,org.apache.roller.util,DateUtil,parseWeblogURLDateString,Complex Conditional
+java,org.apache.roller.util,DateUtil,parseWeblogURLDateString,Complex Conditional
+java,org.apache.roller.util,DateUtil,parseWeblogURLDateString,Magic Number
+java,org.apache.roller.util,DateUtil,parseWeblogURLDateString,Magic Number
+java,org.apache.roller.util,ISO8601DateParser,parse,Magic Number
+java,org.apache.roller.util,ISO8601DateParser,toString,Magic Number
+java,org.apache.roller.util,ISO8601DateParser,toString,Magic Number
+java,org.apache.roller.util,PropertyExpander,expandProperties,Magic Number
+java,org.apache.roller.util,RegexUtil,obfuscateEmail,Magic Number
+java,org.apache.roller.util,RegexUtil,obfuscateEmail,Magic Number
+java,org.apache.roller.util,RegexUtil,obfuscateEmail,Magic Number
+java,org.apache.roller.util,RegexUtil,obfuscateEmail,Magic Number
+java,org.apache.roller.util,RegexUtil,obfuscateEmail,Magic Number
+java,org.apache.roller.util,RegexUtil,encode,Magic Number
+java,org.apache.roller.util,RegexUtil,encode,Magic Number
+java,org.apache.roller.weblogger.business,AbstractURLStrategy,getActionURL,Long Parameter List
+java,org.apache.roller.weblogger.business,DatabaseProvider,DatabaseProvider,Long Statement
+java,org.apache.roller.weblogger.business,DatabaseProvider,DatabaseProvider,Long Statement
+java,org.apache.roller.weblogger.business,DatabaseProvider,DatabaseProvider,Long Statement
+java,org.apache.roller.weblogger.business,FileContentManager,canSave,Long Parameter List
+java,org.apache.roller.weblogger.business,FileContentManagerImpl,canSave,Long Parameter List
+java,org.apache.roller.weblogger.business,FileContentManagerImpl,getDirSize,Complex Conditional
+java,org.apache.roller.weblogger.business,FileContentManagerImpl,checkFileType,Complex Method
+java,org.apache.roller.weblogger.business,GuiceWebloggerProvider,GuiceWebloggerProvider,Long Statement
+java,org.apache.roller.weblogger.business,GuiceWebloggerProvider,GuiceWebloggerProvider,Long Statement
+java,org.apache.roller.weblogger.business,HitCountQueue,HitCountQueue,Magic Number
+java,org.apache.roller.weblogger.business,MailProvider,getTransport,Complex Conditional
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogCommentURL,Long Parameter List
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogCollectionURL,Complex Method
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogCollectionURL,Long Parameter List
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogPageURL,Long Parameter List
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogFeedURL,Long Parameter List
+java,org.apache.roller.weblogger.business,MultiWeblogURLStrategy,getWeblogSearchURL,Long Parameter List
+java,org.apache.roller.weblogger.business,PreviewURLStrategy,getWeblogCollectionURL,Complex Method
+java,org.apache.roller.weblogger.business,PreviewURLStrategy,getWeblogCollectionURL,Long Parameter List
+java,org.apache.roller.weblogger.business,PreviewURLStrategy,getWeblogPageURL,Complex Method
+java,org.apache.roller.weblogger.business,PreviewURLStrategy,getWeblogPageURL,Long Parameter List
+java,org.apache.roller.weblogger.business,TestTask,getLeaseTime,Magic Number
+java,org.apache.roller.weblogger.business,TestTask,getInterval,Magic Number
+java,org.apache.roller.weblogger.business,UserManager,getUsers,Long Parameter List
+java,org.apache.roller.weblogger.business,WeblogEntryManager,getMostCommentedWeblogEntries,Long Parameter List
+java,org.apache.roller.weblogger.business,WeblogEntryManager,removeMatchingComments,Long Parameter List
+java,org.apache.roller.weblogger.business,WeblogEntryManager,getTags,Long Parameter List
+java,org.apache.roller.weblogger.business,WebloggerFactory,bootstrap,Long Statement
+java,org.apache.roller.weblogger.business,WebloggerImpl,WebloggerImpl,Long Parameter List
+java,org.apache.roller.weblogger.business,WeblogManager,getWeblogs,Long Parameter List
+java,org.apache.roller.weblogger.business,WeblogServiceImpl,getBookmarkFolder,Complex Conditional
+java,org.apache.roller.weblogger.business,WeblogServiceImpl,getWeblogConfig,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAAutoPingManagerImpl,removeAutoPing,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,saveFolder,Complex Conditional
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,importOpmlElement,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,getFolder,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,getFolder,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,getDefaultFolder,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,getDefaultFolder,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPABookmarkManagerImpl,getAllFolders,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,getMediaFileDirectoryByName,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,getMediaFileDirectoryByName,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,getMediaFileByOriginalPath,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,searchMediaFiles,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,searchMediaFiles,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,searchMediaFiles,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,searchMediaFiles,Missing default
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,searchMediaFiles,Missing default
+java,org.apache.roller.weblogger.business.jpa,JPAMediaFileManagerImpl,upgradeFileStorage,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAOAuthManagerImpl,getServiceProvider,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAOAuthManagerImpl,getConsumer,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAOAuthManagerImpl,getConsumerByKey,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAPersistenceStrategy,JPAPersistenceStrategy,Complex Conditional
+java,org.apache.roller.weblogger.business.jpa,JPAPersistenceStrategy,JPAPersistenceStrategy,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAPersistenceStrategy,refresh,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAPingQueueManagerImpl,isAlreadyQueued,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAPropertiesManagerImpl,initialize,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAPropertiesManagerImpl,getProperties,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAPropertiesManagerImpl,initializeMissingProps,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,registerLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,unregisterLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAThreadManagerImpl,unregisterLease,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,addUser,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUserByUserName,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsers,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsers,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsers,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsers,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsers,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsersStartingWith,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUsersStartingWith,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getUserNameLetterMap,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,checkPermission,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getWeblogPermission,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getWeblogPermissionIncludingPending,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getWeblogPermissionIncludingPending,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermission,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermission,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermission,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermissionPending,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermissionPending,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,grantWeblogPermissionPending,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,confirmWeblogPermission,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,confirmWeblogPermission,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,declineWeblogPermission,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,declineWeblogPermission,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,revokeWeblogPermission,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,revokeWeblogPermission,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,getWeblogPermissionsIncludingPending,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,hasRole,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAUserManagerImpl,revokeRole,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,saveWeblogEntry,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,saveWeblogEntry,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getNextPrevEntries,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getNextPrevEntries,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getWeblogEntries,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getWeblogEntriesPinnedToMain,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getWeblogEntriesPinnedToMain,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getWeblogEntryByAnchor,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,createAnchor,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getComments,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,removeMatchingComments,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getWeblogCategoryByName,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Identifier
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getMostCommentedWeblogEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,applyCommentDefaultsToEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,applyCommentDefaultsToEntries,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getPopularTags,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getPopularTags,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getPopularTags,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getPopularTags,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getPopularTags,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getTags,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getTags,Long Identifier
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getTags,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,updateTagCount,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,updateTagCount,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,updateTagCount,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getHotWeblogs,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,resetHitCount,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getCommentCount,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogEntryManagerImpl,getEntryCount,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWebloggerImpl,JPAWebloggerImpl,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWebloggerImpl,JPAWebloggerImpl,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,removeWeblogContents,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,removeWeblogContents,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,updateTagAggregates,Empty catch clause
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,updateTagAggregates,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,addWeblogContents,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getWeblogByHandle,Complex Conditional
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getWeblogByHandle,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getWeblogs,Complex Method
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getWeblogs,Long Parameter List
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getUserWeblogs,Complex Conditional
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getTemplateByLink,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getTemplateByAction,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getTemplateByName,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getWeblogHandleLetterMap,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Long Identifier
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Long Statement
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Magic Number
+java,org.apache.roller.weblogger.business.jpa,JPAWeblogManagerImpl,getMostCommentedWeblogs,Magic Number
+java,org.apache.roller.weblogger.business.pings,PingQueueProcessor,processQueue,Long Statement
+java,org.apache.roller.weblogger.business.pings,PingQueueProcessor,handlePingError,Long Statement
+java,org.apache.roller.weblogger.business.pings,PingQueueProcessor,handlePingError,Long Statement
+java,org.apache.roller.weblogger.business.pings,WeblogUpdatePinger,sendPing,Long Statement
+java,org.apache.roller.weblogger.business.plugins.entry,EncodePreTagsPlugin,render,Magic Number
+java,org.apache.roller.weblogger.business.plugins.entry,SmileysPlugin,init,Long Statement
+java,org.apache.roller.weblogger.business.runnable,TaskRunner,main,Magic Number
+java,org.apache.roller.weblogger.business.runnable,TaskRunner,main,Magic Number
+java,org.apache.roller.weblogger.business.runnable,TaskScheduler,run,Magic Number
+java,org.apache.roller.weblogger.business.runnable,TaskScheduler,run,Magic Number
+java,org.apache.roller.weblogger.business.runnable,TaskScheduler,runTasks,Complex Method
+java,org.apache.roller.weblogger.business.runnable,TaskScheduler,runTasks,Magic Number
+java,org.apache.roller.weblogger.business.runnable,TaskScheduler,runTasks,Magic Number
+java,org.apache.roller.weblogger.business.runnable,ThreadManagerImpl,initialize,Magic Number
+java,org.apache.roller.weblogger.business.search,IndexManager,search,Long Parameter List
+java,org.apache.roller.weblogger.business.search.lucene,IndexOperation,getDocument,Complex Method
+java,org.apache.roller.weblogger.business.search.lucene,IndexOperation,beginWriting,Long Statement
+java,org.apache.roller.weblogger.business.search.lucene,IndexUtil,getTerm,Empty catch clause
+java,org.apache.roller.weblogger.business.search.lucene,LuceneIndexManager,search,Long Parameter List
+java,org.apache.roller.weblogger.business.search.lucene,LuceneIndexManager,createIndex,Magic Number
+java,org.apache.roller.weblogger.business.search.lucene,LuceneIndexManager,convertHitsToEntryList,Complex Conditional
+java,org.apache.roller.weblogger.business.search.lucene,LuceneIndexManager,convertHitsToEntryList,Long Parameter List
+java,org.apache.roller.weblogger.business.search.lucene,RebuildWebsiteIndexOperation,doRun,Complex Method
+java,org.apache.roller.weblogger.business.search.lucene,SearchOperation,doRun,Long Statement
+java,org.apache.roller.weblogger.business.search.lucene,SearchOperation,doRun,Long Statement
+java,org.apache.roller.weblogger.business.search.lucene,SearchOperation,doRun,Long Statement
+java,org.apache.roller.weblogger.business.search.lucene,SearchOperation,doRun,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,isCreationRequired,Complex Conditional
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,isCreationRequired,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,isUpgradeRequired,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,createDatabase,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Complex Method
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeDatabase,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Complex Method
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Method
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Long Statement
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo400,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo500,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo500,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo510,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo510,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo520,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo520,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo610,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,upgradeTo610,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,getDatabaseHandle,Complex Method
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,getDatabaseVersion,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,getDatabaseVersion,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,parseVersionString,Empty catch clause
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,parseVersionString,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,parseVersionString,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,parseVersionString,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,parseVersionString,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,setDatabaseVersion,Magic Number
+java,org.apache.roller.weblogger.business.startup,DatabaseInstaller,updateDatabaseVersion,Magic Number
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Complex Method
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Method
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeFromDir,loadThemeFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,SharedThemeTemplate,SharedThemeTemplate,Long Parameter List
+java,org.apache.roller.weblogger.business.themes,ThemeManagerImpl,ThemeManagerImpl,Complex Conditional
+java,org.apache.roller.weblogger.business.themes,ThemeManagerImpl,importTheme,Complex Method
+java,org.apache.roller.weblogger.business.themes,ThemeManagerImpl,importTheme,Long Method
+java,org.apache.roller.weblogger.business.themes,ThemeManagerImpl,loadAllThemesFromDisk,Long Statement
+java,org.apache.roller.weblogger.business.themes,ThemeMetadataParser,unmarshall,Complex Method
+java,org.apache.roller.weblogger.business.themes,ThemeMetadataParser,elementToTemplateMetadata,Complex Method
+java,org.apache.roller.weblogger.business.themes,WeblogCustomTheme,getResource,Empty catch clause
+java,org.apache.roller.weblogger.business.themes,WeblogSharedTheme,getStylesheet,Long Statement
+java,org.apache.roller.weblogger.business.themes,WeblogSharedTheme,getResource,Empty catch clause
+java,org.apache.roller.weblogger.business.url,AuthURLStrategy,getActionURL,Long Parameter List
+java,org.apache.roller.weblogger.business.url,FeedURLStrategy,getWeblogFeedURL,Long Parameter List
+java,org.apache.roller.weblogger.business.url,SearchURLStrategy,getWeblogSearchURL,Long Parameter List
+java,org.apache.roller.weblogger.business.url,WeblogURLStrategy,getWeblogCommentURL,Long Parameter List
+java,org.apache.roller.weblogger.business.url,WeblogURLStrategy,getWeblogCollectionURL,Long Parameter List
+java,org.apache.roller.weblogger.business.url,WeblogURLStrategy,getWeblogPageURL,Long Parameter List
+java,org.apache.roller.weblogger.config,PingConfig,getQueueProcessingIntervalMins,Long Identifier
+java,org.apache.roller.weblogger.config,PingConfig,getQueueProcessingIntervalMins,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,getDisablePingUsage,Long Identifier
+java,org.apache.roller.weblogger.config,PingConfig,getSuspendPingProcessing,Long Identifier
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Complex Method
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Long Identifier
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Magic Number
+java,org.apache.roller.weblogger.config,PingConfig,initializeCommonTargets,Magic Number
+java,org.apache.roller.weblogger.config,PingConfig,initializePingVariants,Complex Method
+java,org.apache.roller.weblogger.config,PingConfig,initializePingVariants,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,initializePingVariants,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,initializePingVariants,Magic Number
+java,org.apache.roller.weblogger.config,PingConfig,initializePingVariants,Magic Number
+java,org.apache.roller.weblogger.config,PingConfig,getIntegerProperty,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,getIntegerProperty,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,getIntegerProperty,Long Statement
+java,org.apache.roller.weblogger.config,PingConfig,getBooleanProperty,Long Statement
+java,org.apache.roller.weblogger.config.runtime,PropertyDef,setRows,Empty catch clause
+java,org.apache.roller.weblogger.config.runtime,PropertyDef,setCols,Empty catch clause
+java,org.apache.roller.weblogger.planet.business,WebloggerRomeFeedFetcher,fetchSubscription,Complex Method
+java,org.apache.roller.weblogger.planet.business,WebloggerRomeFeedFetcher,fetchSubscription,Magic Number
+java,org.apache.roller.weblogger.planet.tasks,SyncWebsitesTask,runTask,Long Statement
+java,org.apache.roller.weblogger.planet.ui,PlanetConfig,save,Complex Conditional
+java,org.apache.roller.weblogger.planet.ui,PlanetConfig,save,Complex Method
+java,org.apache.roller.weblogger.pojos,AutoPing,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,CustomTemplateRendition,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,GlobalPermission,implies,Complex Method
+java,org.apache.roller.weblogger.pojos,MediaFile,getThumbnailHeight,Complex Conditional
+java,org.apache.roller.weblogger.pojos,MediaFile,getThumbnailWidth,Complex Conditional
+java,org.apache.roller.weblogger.pojos,MediaFileComparator,compare,Missing default
+java,org.apache.roller.weblogger.pojos,MediaFileDirectory,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,MediaFileDirectoryComparator,compare,Missing default
+java,org.apache.roller.weblogger.pojos,PingQueueEntry,PingQueueEntry,Long Parameter List
+java,org.apache.roller.weblogger.pojos,StatCount,StatCount,Long Parameter List
+java,org.apache.roller.weblogger.pojos,User,User,Long Parameter List
+java,org.apache.roller.weblogger.pojos,Weblog,Weblog,Long Parameter List
+java,org.apache.roller.weblogger.pojos,Weblog,toString,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogBookmark,WeblogBookmark,Long Parameter List
+java,org.apache.roller.weblogger.pojos,WeblogBookmark,calculatePriority,Magic Number
+java,org.apache.roller.weblogger.pojos,WeblogBookmark,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogCategory,calculatePosition,Magic Number
+java,org.apache.roller.weblogger.pojos,WeblogConfig,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogConfig,hashCode,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogConfig,from,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogEntry,WeblogEntry,Long Parameter List
+java,org.apache.roller.weblogger.pojos,WeblogEntry,getComments,Empty catch clause
+java,org.apache.roller.weblogger.pojos,WeblogEntry,getRss09xDescription,Magic Number
+java,org.apache.roller.weblogger.pojos,WeblogEntry,createAnchorBase,Magic Number
+java,org.apache.roller.weblogger.pojos,WeblogEntry,displayContent,Complex Conditional
+java,org.apache.roller.weblogger.pojos,WeblogEntryComment,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogEntryTag,WeblogEntryTag,Long Parameter List
+java,org.apache.roller.weblogger.pojos,WeblogPermission,implies,Complex Method
+java,org.apache.roller.weblogger.pojos,WeblogPermission,equals,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogTemplate,getOutputContentType,Long Statement
+java,org.apache.roller.weblogger.pojos,WeblogTemplate,addTemplateRendition,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogCategoryWrapper,retrieveWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogEntryWrapper,getCategories,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogEntryWrapper,getTags,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogEntryWrapper,getComments,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogEntryWrapper,getComments,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogWrapper,getStylesheet,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogWrapper,getWeblogCategories,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogWrapper,getRecentWeblogEntries,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogWrapper,getRecentWeblogEntriesByTag,Long Statement
+java,org.apache.roller.weblogger.pojos.wrapper,WeblogWrapper,getRecentComments,Long Statement
+java,org.apache.roller.weblogger.ui.core,RollerContext,createPasswordEncoder,Complex Method
+java,org.apache.roller.weblogger.ui.core,RollerContext,createPasswordEncoder,Long Statement
+java,org.apache.roller.weblogger.ui.core,RollerContext,createPasswordEncoder,Long Statement
+java,org.apache.roller.weblogger.ui.core,RollerSession,getRollerSession,Complex Conditional
+java,org.apache.roller.weblogger.ui.core,RollerSession,getRollerSession,Complex Conditional
+java,org.apache.roller.weblogger.ui.core,RollerSession,getRollerSession,Complex Method
+java,org.apache.roller.weblogger.ui.core.filters,BootstrapFilter,doFilter,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.filters,BootstrapFilter,doFilter,Long Statement
+java,org.apache.roller.weblogger.ui.core.filters,BootstrapFilter,isInstallUrl,Long Statement
+java,org.apache.roller.weblogger.ui.core.filters,CustomOpenIDAuthenticationProcessingFilter,lookupRealm,Long Statement
+java,org.apache.roller.weblogger.ui.core.filters,InitFilter,getAbsoluteUrl,Long Statement
+java,org.apache.roller.weblogger.ui.core.filters,InitFilter,getAbsoluteUrl,Long Parameter List
+java,org.apache.roller.weblogger.ui.core.filters,LoadSaltFilter,doFilter,Magic Number
+java,org.apache.roller.weblogger.ui.core.plugins,UIPluginManagerImpl,loadEntryEditorClasses,Long Statement
+java,org.apache.roller.weblogger.ui.core.security,BasicUserAutoProvision,hasNecessaryFields,Long Statement
+java,org.apache.roller.weblogger.ui.core.security,CustomUserRegistry,getUserDetailsFromAuthentication,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.security,CustomUserRegistry,getUserDetailsFromAuthentication,Complex Method
+java,org.apache.roller.weblogger.ui.core.security,CustomUserRegistry,getUserDetailsFromAuthentication,Long Identifier
+java,org.apache.roller.weblogger.ui.core.security,CustomUserRegistry,getUserDetailsFromAuthentication,Long Statement
+java,org.apache.roller.weblogger.ui.core.security,RollerRememberMeAuthenticationProvider,RollerRememberMeAuthenticationProvider,Long Statement
+java,org.apache.roller.weblogger.ui.core.security,RollerRememberMeServices,RollerRememberMeServices,Long Statement
+java,org.apache.roller.weblogger.ui.core.security,StandardUserLoadingStrategy,loadUser,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,BigWeblogCalendarModel,getContent,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,BigWeblogCalendarModel,getContent,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,BigWeblogCalendarModel,getContent,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,BigWeblogCalendarModel,computeUrl,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Complex Method
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,doStartTag,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,buildDayNames,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,CalendarTag,buildDayNames,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,parseWeblogURLDateString,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,parseWeblogURLDateString,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,parseWeblogURLDateString,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,parseWeblogURLDateString,Magic Number
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,computeUrl,Long Statement
+java,org.apache.roller.weblogger.ui.core.tags.calendar,WeblogCalendarModel,computeTodayMonthUrl,Long Statement
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Conditional
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Complex Method
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Long Parameter List
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Long Statement
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,buildMenu,Long Statement
+java,org.apache.roller.weblogger.ui.core.util.menu,MenuHelper,elementToParsedTab,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.mobile,MobileDeviceRepository,isMobileDevice,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.mobile,MobileDeviceRepository,isMobileDevice,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.mobile,MobileDeviceRepository,isMobileDevice,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.model,CalendarModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedModel,FeedEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedModel,FeedCommentsPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedModel,FeedFilesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedModel,FeedFilesPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.model,FeedEntriesPager,FeedEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedCommentsPager,FeedCommentsPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedFilesPager,FeedFilesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,FeedFilesPager,FeedFilesPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.model,PageModel,getWeblogEntriesPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.model,PreviewPageModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PreviewPageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PreviewPageModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,PreviewURLModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SearchResultsFeedModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SearchResultsFeedModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SearchResultsFeedModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SearchResultsModel,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getWeblogEntriesPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getWeblogEntriesPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getCommentsPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getUsersByLetterPager,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getNewWeblogs,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.model,SiteModel,getHotWeblogs,Long Statement
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,handleRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,calculateForwardUrl,Complex Method
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,calculateForwardUrl,Long Method
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,calculateForwardUrl,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,calculateForwardUrl,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,calculateForwardUrl,Missing default
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isWeblog,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Long Statement
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering,WeblogRequestMapper,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,AbstractWeblogEntriesPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,AbstractWeblogEntriesPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,parseDate,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,parseDate,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,parseDate,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,parseDate,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,AbstractWeblogEntriesPager,createURL,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,CommentsPager,CommentsPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,PlanetEntriesPager,PlanetEntriesPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,SearchResultsFeedPager,SearchResultsFeedPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,SearchResultsFeedPager,SearchResultsFeedPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,SearchResultsPager,SearchResultsPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,UsersPager,UsersPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,UsersPager,UsersPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesDayPager,WeblogEntriesDayPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesDayPager,WeblogEntriesDayPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesDayPager,WeblogEntriesDayPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesDayPager,WeblogEntriesDayPager,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesLatestPager,WeblogEntriesLatestPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesListPager,WeblogEntriesListPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesMonthPager,WeblogEntriesMonthPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,WeblogEntriesPermalinkPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getNextName,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getNextName,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getPrevName,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getPrevName,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getNextEntry,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getNextEntry,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getPrevEntry,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPermalinkPager,getPrevEntry,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogEntriesPreviewPager,WeblogEntriesPreviewPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogsPager,WeblogsPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.pagers,WeblogsPager,WeblogsPager,Long Parameter List
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,AkismetCommentValidator,validate,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,LdapCommentAuthenticator,authenticate,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,LdapCommentAuthenticator,authenticate,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,LdapCommentAuthenticator,validateUsernamePass,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,LdapCommentAuthenticator,validateRollerProperties,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,LdapCommentAuthenticator,validateRollerProperties,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,MathCommentAuthenticator,getHtml,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,MathCommentAuthenticator,getHtml,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,MathCommentAuthenticator,getHtml,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,MathCommentAuthenticator,authenticate,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,TrackbackLinkbackCommentValidator,validate,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,TrackbackLinkbackCommentValidator,validate,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.plugins.comments,TrackbackLinkbackCommentValidator,validate,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,init,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,init,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,CommentServlet,doPost,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,FeedServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,FeedServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,FeedServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,FeedServlet,doGet,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,FeedServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,MediaResourceServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,init,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.servlets,PageServlet,processReferrer,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.servlets,PlanetFeedServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,PlanetFeedServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PlanetFeedServlet,doGet,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewResourceServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewServlet,doGet,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,PreviewServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,ResourceServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,SearchServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,SearchServlet,doGet,Long Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,SearchServlet,doGet,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,TrackbackServlet,doPost,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.servlets,TrackbackServlet,doPost,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.servlets,TrackbackServlet,doPost,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,TrackbackServlet,doPost,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.servlets,TrackbackServlet,doPost,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.cache,PlanetCache,PlanetCache,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util.cache,PlanetCache,generateKey,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.cache,SiteWideCache,generateKey,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util.cache,SiteWideCache,generateKey,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.cache,SiteWideCache,generateKey,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.cache,WeblogFeedCache,generateKey,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.cache,WeblogPageCache,generateKey,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util.cache,WeblogPageCache,generateKey,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,ModDateHeaderUtil,respondIfNotModified,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,ModDateHeaderUtil,respondIfNotModified,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogCommentRequest,WeblogCommentRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogCommentRequest,WeblogCommentRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogFeedRequest,WeblogFeedRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Long Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,WeblogPageRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,isValidDateString,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,isValidDateString,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPageRequest,isValidDateString,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPreviewRequest,getTheme,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPreviewRequest,getWeblogEntry,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogPreviewResourceRequest,getTheme,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,WeblogRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,WeblogRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,WeblogRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,WeblogRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,WeblogRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,isLocale,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogRequest,getLocaleInstance,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogSearchRequest,WeblogSearchRequest,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogTrackbackRequest,WeblogTrackbackRequest,Complex Conditional
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogTrackbackRequest,WeblogTrackbackRequest,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogTrackbackRequest,WeblogTrackbackRequest,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util,WeblogTrackbackRequest,WeblogTrackbackRequest,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.mobile,DeviceUtils,getRequiredCurrentDevice,Long Statement
+java,org.apache.roller.weblogger.ui.rendering.util.mobile,LiteDeviceResolver,resolveDevice,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.util.mobile,LiteDeviceResolver,resolveDevice,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.mobile,LiteDeviceResolver,resolveDevice,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.util.mobile,LiteDeviceResolver,init,Long Identifier
+java,org.apache.roller.weblogger.ui.rendering.velocity,ThemeResourceLoader,getResourceReader,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.velocity,ThemeResourceLoader,getResourceReader,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.velocity,ThemeResourceLoader,getResourceReader,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.velocity,VelocityRendererFactory,getRenderer,Empty catch clause
+java,org.apache.roller.weblogger.ui.rendering.velocity,WebappResourceLoader,init,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.velocity,WebappResourceLoader,getResourceReader,Complex Method
+java,org.apache.roller.weblogger.ui.rendering.velocity,WebappResourceLoader,getResourceReader,Magic Number
+java,org.apache.roller.weblogger.ui.rendering.velocity,WebappResourceLoader,getCachedFile,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.admin,CreateUserBean,copyFrom,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalCommentManagement,buildBaseUrl,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalCommentManagement,delete,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalCommentManagement,update,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalCommentManagementBean,getStartDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalCommentManagementBean,getEndDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.admin,GlobalConfig,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,save,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,myValidate,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,myValidate,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.admin,UserEdit,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.ajax,CommentDataServlet,doPut,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.ajax,UserDataServlet,doGet,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.ajax,UserDataServlet,doGet,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.core,CreateWeblog,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Install,getDatabaseProductName,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.core,Install,getDatabaseProductName,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,save,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,myValidate,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Profile,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Register,execute,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Register,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Register,retryActivationCode,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.core,Register,myValidate,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.core,Register,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.core,Register,myValidate,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.editor,BookmarkEdit,myValidate,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.editor,BookmarkEdit,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,BookmarksImport,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Comments,buildBaseUrl,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Comments,delete,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Comments,update,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,CommentsBean,getStartDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,CommentsBean,getEndDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,Entries,buildBaseUrl,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,Entries,buildBaseUrl,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Entries,getSortByOptions,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Entries,getSortByOptions,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,EntriesBean,getStartDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,EntriesBean,getEndDate,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryAddWithMediaFile,execute,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryAddWithMediaFile,execute,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryAddWithMediaFile,execute,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryEdit,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryEdit,getPreviewURL,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryEdit,trackback,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,EntryEdit,getRecentEntries,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileAdd,myPrepare,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileAdd,save,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileAdd,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileSearchBean,copyTo,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileSearchBean,copyTo,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileSearchBean,copyTo,Missing default
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myValidate,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.editor,MediaFileView,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Members,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,MembersInvite,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,StylesheetEdit,copyStylesheet,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.editor,StylesheetEdit,revert,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,StylesheetEdit,revert,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,StylesheetEdit,delete,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.editor,TemplateEdit,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,TemplateEdit,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Templates,execute,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,Templates,execute,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Templates,remove,Complex Conditional
+java,org.apache.roller.weblogger.ui.struts2.editor,Templates,remove,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,Templates,myValidate,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,ThemeEdit,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,ThemeEdit,myPrepare,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,ThemeEdit,save,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.editor,ThemeEdit,isFirstCustomization,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.editor,WeblogConfig,save,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,isUserIsAdmin,Empty catch clause
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getHoursList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getMinutesList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UIAction,getCommentDaysList,Magic Number
+java,org.apache.roller.weblogger.ui.struts2.util,UISecurityInterceptor,doIntercept,Complex Method
+java,org.apache.roller.weblogger.ui.struts2.util,UISecurityInterceptor,doIntercept,Long Statement
+java,org.apache.roller.weblogger.ui.struts2.util,UISecurityInterceptor,doIntercept,Long Statement
+java,org.apache.roller.weblogger.ui.tags,WordWrapTag,wordWrap,Complex Conditional
+java,org.apache.roller.weblogger.ui.tags,WordWrapTag,wordWrap,Complex Method
+java,org.apache.roller.weblogger.ui.tags,WordWrapTag,wordWrap,Long Parameter List
+java,org.apache.roller.weblogger.util,Bannedwordslist,downloadBannedwordslist,Complex Conditional
+java,org.apache.roller.weblogger.util,Bannedwordslist,downloadBannedwordslist,Long Statement
+java,org.apache.roller.weblogger.util,Bannedwordslist,loadBannedwordslistFromFile,Long Statement
+java,org.apache.roller.weblogger.util,BannedwordslistChecker,checkReferrer,Long Statement
+java,org.apache.roller.weblogger.util,BannedwordslistChecker,testComment,Complex Conditional
+java,org.apache.roller.weblogger.util,BannedwordslistChecker,testComment,Long Statement
+java,org.apache.roller.weblogger.util,BannedwordslistChecker,testComment,Long Statement
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Complex Conditional
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Complex Conditional
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Complex Conditional
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Complex Method
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Long Method
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Magic Number
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Magic Number
+java,org.apache.roller.weblogger.util,HTMLSanitizer,sanitizer,Magic Number
+java,org.apache.roller.weblogger.util,HTMLSanitizer,tokenize,Magic Number
+java,org.apache.roller.weblogger.util,HTMLSanitizer,tokenize,Magic Number
+java,org.apache.roller.weblogger.util,HTMLSanitizer,replaceAllNoRegex,Long Statement
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Complex Method
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Magic Number
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Magic Number
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Magic Number
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Magic Number
+java,org.apache.roller.weblogger.util,I18nUtils,toLocale,Magic Number
+java,org.apache.roller.weblogger.util,IPBanList,addBannedIp,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,extractByParsingHtml,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,extractByParsingHtml,Magic Number
+java,org.apache.roller.weblogger.util,LinkbackExtractor,extractByParsingHtml,Magic Number
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleStartTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleStartTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleSimpleTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleSimpleTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleSimpleTag,Complex Method
+java,org.apache.roller.weblogger.util,LinkbackExtractor,handleEndTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleStartTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleStartTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleSimpleTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleSimpleTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleSimpleTag,Complex Method
+java,org.apache.roller.weblogger.util,LinkbackCallback,handleEndTag,Complex Conditional
+java,org.apache.roller.weblogger.util,LRUCache2,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,LRUCache2,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,LRUCache2,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util,MailUtil,sendPendingEntryNotice,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendPendingEntryNotice,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendPendingEntryNotice,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendPendingEntryNotice,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendWeblogInvitation,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendWeblogInvitation,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendWeblogInvitation,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendWeblogInvitation,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendUserActivationEmail,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendUserActivationEmail,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendEmailNotification,Complex Method
+java,org.apache.roller.weblogger.util,MailUtil,sendEmailNotification,Long Method
+java,org.apache.roller.weblogger.util,MailUtil,sendEmailNotification,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendEmailNotification,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendEmailNotification,Long Statement
+java,org.apache.roller.weblogger.util,MailUtil,sendMessage,Complex Method
+java,org.apache.roller.weblogger.util,MailUtil,sendMessage,Long Parameter List
+java,org.apache.roller.weblogger.util,MailUtil,sendTextMessage,Long Parameter List
+java,org.apache.roller.weblogger.util,MailUtil,sendHTMLMessage,Long Parameter List
+java,org.apache.roller.weblogger.util,MediacastUtil,lookupResource,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,main,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,savePasswords,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,encryptionOn,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,encryptionOn,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,encryptionOff,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,resetPassword,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,grantAdmin,Long Statement
+java,org.apache.roller.weblogger.util,PasswordUtility,grantAdmin,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,grantAdmin,Magic Number
+java,org.apache.roller.weblogger.util,PasswordUtility,grantAdmin,Magic Number
+java,org.apache.roller.weblogger.util,Trackback,send,Long Statement
+java,org.apache.roller.weblogger.util,Trackback,send,Magic Number
+java,org.apache.roller.weblogger.util,Trackback,parseTrackbackResponse,Empty catch clause
+java,org.apache.roller.weblogger.util,Trackback,parseTrackbackResponse,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,removeHTML,Complex Method
+java,org.apache.roller.weblogger.util,Utilities,copyFile,Empty catch clause
+java,org.apache.roller.weblogger.util,Utilities,copyInputToOutput,Empty catch clause
+java,org.apache.roller.weblogger.util,Utilities,copyInputToOutput,Empty catch clause
+java,org.apache.roller.weblogger.util,Utilities,encodePassword,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,encodePassword,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,encodePassword,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,encodePassword,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,removeVisibleHTMLTags,Complex Conditional
+java,org.apache.roller.weblogger.util,Utilities,removeVisibleHTMLTags,Complex Method
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,toBase64,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,stripInvalidTagCharacters,Complex Conditional
+java,org.apache.roller.weblogger.util,Utilities,stripInvalidTagCharacters,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,stripInvalidTagCharacters,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,stripInvalidTagCharacters,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,stripInvalidTagCharacters,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,transformToHTMLSubset,Long Identifier
+java,org.apache.roller.weblogger.util,Utilities,transformToHTMLSubset,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,transformToHTMLSubset,Magic Number
+java,org.apache.roller.weblogger.util,Utilities,getContentTypeFromFileName,Empty catch clause
+java,org.apache.roller.weblogger.util,Utilities,hasNameAndDomain,Magic Number
+java,org.apache.roller.weblogger.util.cache,ExpiringLRUCacheFactoryImpl,constructCache,Magic Number
+java,org.apache.roller.weblogger.util.cache,ExpiringLRUCacheFactoryImpl,constructCache,Magic Number
+java,org.apache.roller.weblogger.util.cache,ExpiringLRUCacheFactoryImpl,constructCache,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRUCacheFactoryImpl,constructCache,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRUCacheImpl,LRUCacheImpl,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRUCacheImpl,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRUCacheImpl,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRUCacheImpl,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.util.cache,LRULinkedHashMap,LRULinkedHashMap,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,getEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,getCollection,Complex Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,getCollection,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,getCollection,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,getCollection,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,putEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,putEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,deleteEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,copyToRollerEntry,Complex Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,EntryCollection,copyToRollerEntry,Long Statement
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,postMedia,Complex Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,getCollection,Complex Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,getCollection,Empty catch clause
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,getCollection,Long Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,getCollection,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,filePathFromPathInfo,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,filePathFromPathInfo,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,filePathFromPathInfo,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,MediaCollection,createFileName,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,getEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,deleteEntry,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,isEntryURI,Complex Conditional
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,isEntryURI,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,isEntryURI,Magic Number
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,authenticateWSSE,Complex Method
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,authenticateWSSE,Long Statement
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomHandler,oneSecondThrottle,Empty catch clause
+java,org.apache.roller.weblogger.webservices.atomprotocol,RollerAtomService,RollerAtomService,Long Statement
+java,org.apache.roller.weblogger.webservices.oauth,AuthorizationServlet,returnToConsumer,Complex Conditional
+java,org.apache.roller.weblogger.webservices.oauth,AuthorizationServlet,returnToConsumer,Long Statement
+java,org.apache.roller.weblogger.webservices.tagdata,TagDataServlet,doGet,Complex Conditional
+java,org.apache.roller.weblogger.webservices.tagdata,TagDataServlet,doGet,Complex Method
+java,org.apache.roller.weblogger.webservices.tagdata,TagDataServlet,doGet,Long Method
+java,org.apache.roller.weblogger.webservices.tagdata,TagDataServlet,doGet,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,BaseAPIHandler,validate,Complex Method
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,deletePost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,setTemplate,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,getTemplate,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,getUsersBlogs,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,editPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,newPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,newPost,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,newPost,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,newPost,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,BloggerAPIHandler,getRecentPosts,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,editPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,editPost,Complex Method
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,editPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,newPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,newPost,Complex Method
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,newPost,Long Parameter List
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,newPost,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,newPost,Magic Number
+java,org.apache.roller.weblogger.webservices.xmlrpc,MetaWeblogAPIHandler,createCategoryStruct,Long Statement

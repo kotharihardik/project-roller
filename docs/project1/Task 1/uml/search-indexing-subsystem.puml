@@ -1,0 +1,814 @@
+@startuml Search and Indexing Subsystem
+skinparam linetype ortho
+
+title Apache Roller - Search and Indexing Subsystem (Lucene-based)
+
+package "Weblog and content subsystem"{
+    class Weblog 
+    class WeblogEntry
+    class WeblogCategory
+    class WeblogEntryComment
+    class WeblogEntryTag
+    class WeblogEntryAttribute
+    class WeblogTemplate
+    interface ThemeTemplate extends Template
+    enum ComponentType 
+    interface Template
+    class CustomTemplateRendition implements TemplateRendition
+    interface TemplateRendition
+    enum RenditionTyp
+    enum TemplateLanguage 
+    enum PubStatus
+    enum ApprovalStatus
+    interface Weblogger
+    interface URLStrategy
+    class SearchServlet extends HttpServlet
+    class WeblogRequest extends ParsedRequest 
+    class WeblogPageRequest extends WeblogRequest
+}
+package "User subsystem"{
+    class User
+}
+package "org.apache.roller.weblogger.pojos" #DDDDFF {
+    
+     
+    WeblogEntryAttribute ..> WeblogEntry : "belongs to"
+    WeblogEntry ..> Weblog : "belongs to"
+    WeblogEntry ..> User : "created by"
+    WeblogEntry ..> WeblogCategory : "categorized in"
+    WeblogEntry ..> WeblogEntryAttribute : "has attributes"
+    WeblogEntry ..> WeblogEntryComment : "has comments"
+    WeblogEntry ..> WeblogEntryTag : "has tags"
+
+
+    
+    
+
+    Weblog ..> User : has creator
+    Weblog "0..*" -- "1" User : owned by
+
+    
+    
+    WeblogCategory ..> Weblog : belongs to
+    WeblogCategory ..> WeblogEntry : retrieves
+
+    
+
+    
+
+    TemplateRendition ..> RenditionType
+    TemplateRendition ..> TemplateLanguage
+
+    
+    CustomTemplateRendition ..> WeblogTemplate : "belongs to"
+    CustomTemplateRendition ..> RenditionType : "has type"
+    CustomTemplateRendition ..> TemplateLanguage : "has language"
+
+    Template ..> TemplateRendition : provides
+    Template ..> CustomTemplateRendition : uses
+
+    ThemeTemplate ..> ComponentType: uses
+    WeblogEntryComment ..> WeblogEntry : "belongs to"
+    WeblogEntryComment ..> ApprovalStatus : "has status"
+
+     
+
+    WeblogEntryTag ..> WeblogEntry : "belongs to"
+    WeblogEntryTag ..> Weblog : returns
+    WeblogEntryTag ..> User : "created by"
+
+
+    package "wrapper"{
+        class WeblogWrapper {
+            - pojo : Weblog
+            - urlStrategy : URLStrategy
+
+            - WeblogWrapper(toWrap : Weblog, strat : URLStrategy)
+            + {static} wrap(toWrap : Weblog, strat : URLStrategy) : WeblogWrapper
+            + getTemplateByAction(action : ComponentType) : ThemeTemplateWrapper
+            + getTemplateByName(name : String) : ThemeTemplateWrapper
+            + getTemplateByLink(link : String) : ThemeTemplateWrapper
+            + getTemplates() : List<ThemeTemplateWrapper>
+            + getId() : String
+            + getHandle() : String
+            + getName() : String
+            + getTagline() : String
+            + getCreator() : UserWrapper
+            + getEnableBloggerApi() : Boolean
+            + getBloggerCategory() : WeblogCategoryWrapper
+            + getEditorPage() : String
+            + getBannedwordslist() : String
+            + getAllowComments() : Boolean
+            + getDefaultAllowComments() : Boolean
+            + getDefaultCommentDays() : int
+            + getModerateComments() : Boolean
+            + getAnalyticsCode() : String
+            + getEmailComments() : Boolean
+            + getEmailAddress() : String
+            + getEditorTheme() : String
+            + getLocale() : String
+            + getTimeZone() : String
+            + getDateCreated() : Date
+            + getDefaultPlugins() : String
+            + getLocaleInstance() : Locale
+            + getTimeZoneInstance() : TimeZone
+            + getEntryDisplayCount() : int
+            + getVisible() : Boolean
+            + getEnabled() : Boolean
+            + getActive() : Boolean
+            + getLastModified() : Date
+            + isEnableMultiLang() : boolean
+            + isShowAllLangs() : boolean
+            + getStylesheet() : String
+            + getIcon() : String
+            + getAbout() : String
+            + getURL() : String
+            + getAbsoluteURL() : String
+            + getWeblogEntry(anchor : String) : WeblogEntryWrapper
+            + getWeblogCategories() : List<WeblogCategoryWrapper>
+            + getWeblogCategory(categoryName : String) : WeblogCategoryWrapper
+            + getRecentWeblogEntries(cat : String, length : int) : List<WeblogEntryWrapper>
+            + getRecentWeblogEntriesByTag(tag : String, length : int) : List<WeblogEntryWrapper>
+            + getRecentComments(length : int) : List<WeblogEntryCommentWrapper>
+            + getTodaysHits() : int
+            + getPopularTags(sinceDays : int, length : int) : List<TagStat>
+            + getCommentCount() : long
+            + getEntryCount() : long
+            + getPojo() : Weblog
+        }
+
+        WeblogWrapper ..> Weblog : wraps
+        WeblogWrapper ..> URLStrategy : uses
+        WeblogWrapper ..> ThemeTemplateWrapper : uses
+        WeblogWrapper ..> WeblogCategoryWrapper : uses
+        WeblogWrapper ..> WeblogEntryWrapper : uses
+        WeblogWrapper ..> WeblogEntryCommentWrapper : uses
+
+        class UserWrapper {
+            - pojo : User
+
+            - UserWrapper(toWrap : User)
+            + {static} wrap(toWrap : User) : UserWrapper
+            + getUserName() : String
+            + getScreenName() : String
+            + getFullName() : String
+            + getEmailAddress() : String
+            + getDateCreated() : Date
+            + getLocale() : String
+            + getTimeZone() : String
+        }
+        UserWrapper ..> User : wraps
+
+        class WeblogEntryAttributeWrapper {
+            - pojo : WeblogEntryAttribute
+
+            - WeblogEntryAttributeWrapper(toWrap : WeblogEntryAttribute)
+            + {static} wrap(toWrap : WeblogEntryAttribute) : WeblogEntryAttributeWrapper
+            + getName() : String
+            + getValue() : String
+        }
+        WeblogEntryAttributeWrapper ..> WeblogEntryAttribute : wraps
+
+        class WeblogEntryWrapper {
+            - pojo : WeblogEntry
+            - urlStrategy : URLStrategy
+            --
+            - WeblogEntryWrapper(toWrap : WeblogEntry, strat : URLStrategy)
+            + {static} wrap(toWrap : WeblogEntry, strat : URLStrategy) : WeblogEntryWrapper
+            + getId() : String
+            + getCategory() : WeblogCategoryWrapper
+            + getCategories() : List<WeblogCategoryWrapper>
+            + getWebsite() : WeblogWrapper
+            + getCreator() : UserWrapper
+            + getTitle() : String
+            + getSummary() : String
+            + getText() : String
+            + getContentType() : String
+            + getContentSrc() : String
+            + getAnchor() : String
+            + getEntryAttributes() : List<WeblogEntryAttributeWrapper>
+            + findEntryAttribute(name : String) : String
+            + getPubTime() : Timestamp
+            + getUpdateTime() : Timestamp
+            + getStatus() : PubStatus
+            + getLink() : String
+            + getPlugins() : String
+            + getAllowComments() : Boolean
+            + getCommentDays() : Integer
+            + getRightToLeft() : Boolean
+            + getPinnedToMain() : Boolean
+            + getLocale() : String
+            + getTags() : List<WeblogEntryTagWrapper>
+            + getTagsAsString() : String
+            + getCommentsStillAllowed() : boolean
+            + formatPubTime(pattern : String) : String
+            + formatUpdateTime(pattern : String) : String
+            + getComments() : List<WeblogEntryCommentWrapper>
+            + getComments(ignoreSpam : boolean, approvedOnly : boolean) : List<WeblogEntryCommentWrapper>
+            + getCommentCount() : int
+            + getPermalink() : String
+            + getPermaLink() : String
+            + getCommentsLink() : String
+            + getDisplayTitle() : String
+            + getRss09xDescription() : String
+            + getRss09xDescription(maxLength : int) : String
+            + getPluginsList() : List<String>
+            + getTransformedText() : String
+            + getTransformedSummary() : String
+            + displayContent(readMoreLink : String) : String
+            + getDisplayContent() : String
+            + getSearchDescription() : String
+            + getPojo() : WeblogEntry
+        }
+
+        class WeblogEntryTagWrapper {
+            - pojo : WeblogEntryTag
+
+            - WeblogEntryTagWrapper(toWrap : WeblogEntryTag)
+            + {static} wrap(toWrap : WeblogEntryTag) : WeblogEntryTagWrapper
+            + getUser() : UserWrapper
+            + getName() : String
+            + getTime() : Timestamp
+        }
+        WeblogEntryTagWrapper ..> WeblogEntryTag : wraps
+
+
+        WeblogEntryWrapper ..> WeblogEntry : wraps
+        WeblogEntryWrapper ..> URLStrategy : uses
+        WeblogEntryWrapper ..> WeblogCategoryWrapper : uses
+        WeblogEntryWrapper ..> WeblogWrapper : uses
+        WeblogEntryWrapper ..> UserWrapper : uses
+        WeblogEntryWrapper ..> WeblogEntryAttributeWrapper : uses
+        WeblogEntryWrapper ..> WeblogEntryTagWrapper : uses
+        WeblogEntryWrapper ..> WeblogEntryCommentWrapper : uses
+
+        class WeblogEntryCommentWrapper {
+            - pojo : WeblogEntryComment
+            - urlStrategy : URLStrategy
+
+            - WeblogEntryCommentWrapper(toWrap : WeblogEntryComment, strat : URLStrategy)
+            + {static} wrap(toWrap : WeblogEntryComment, strat : URLStrategy) : WeblogEntryCommentWrapper
+            + getId() : String
+            + getWeblogEntry() : WeblogEntryWrapper
+            + getName() : String
+            + getEmail() : String
+            + getUrl() : String
+            + getContent() : String
+            + getPostTime() : Timestamp
+            + getStatus() : ApprovalStatus
+            + getNotify() : Boolean
+            + getRemoteHost() : String
+            + getReferrer() : String
+            + getUserAgent() : String
+            + getSpam() : Boolean
+            + getPending() : Boolean
+            + getApproved() : Boolean
+            + getTimestamp() : String
+        }
+
+        WeblogEntryCommentWrapper ..> WeblogEntryComment : wraps
+        WeblogEntryCommentWrapper ..> URLStrategy : uses
+
+        class ThemeTemplateWrapper {
+            - pojo : ThemeTemplate
+            --
+            - ThemeTemplateWrapper(toWrap : ThemeTemplate)
+            + {static} wrap(toWrap : ThemeTemplate) : ThemeTemplateWrapper
+            + getId() : String
+            + getName() : String
+            + getDescription() : String
+            + getLink() : String
+            + getLastModified() : Date
+            + isHidden() : boolean
+            + isNavbar() : boolean
+        }
+
+        ThemeTemplateWrapper ..> ThemeTemplate : wraps
+
+        class WeblogCategoryWrapper {
+            - pojo : WeblogCategory
+            - urlStrategy : URLStrategy
+
+            - WeblogCategoryWrapper(toWrap : WeblogCategory, strat : URLStrategy)
+            + {static} wrap(toWrap : WeblogCategory, strat : URLStrategy) : WeblogCategoryWrapper
+            + getId() : String
+            + getName() : String
+            + getDescription() : String
+            + getImage() : String
+            + getWebsite() : WeblogWrapper
+            + retrieveWeblogEntries(publishedOnly : boolean) : List<WeblogEntryWrapper>
+            + isInUse() : boolean
+        }
+        WeblogCategoryWrapper ..> WeblogCategory : wraps
+        WeblogCategoryWrapper ..> URLStrategy : uses
+    }
+}
+
+package "org.apache.roller.weblogger.business.search" #FFEEEE {
+    
+    
+    URLStrategy ..> Weblog : uses
+
+    interface IndexManager {
+        + initialize(): void
+        + shutdown(): void
+        + release(): void
+        + isInconsistentAtStartup(): boolean
+        + addEntryIndexOperation(entry: WeblogEntry): void
+        + addEntryReIndexOperation(entry: WeblogEntry): void
+        + rebuildWeblogIndex(weblog: Weblog): void
+        + rebuildWeblogIndex(): void
+        + removeWeblogIndex(weblog: Weblog): void
+        + removeEntryIndexOperation(entry: WeblogEntry): void
+        + search(term: String, weblogHandle: String, category: String, locale: String, pageNum: int, entryCount: int, urlStrategy: URLStrategy): SearchResultList
+    }
+
+    class SearchResultList {
+        - limit: int
+        - offset: int
+        - categories: Set<String>
+        - results: List<WeblogEntryWrapper>
+        --
+        + SearchResultList(results, categories, limit, offset)
+        + getLimit(): int
+        + getOffset(): int
+        + getResults(): List<WeblogEntryWrapper>
+        + getCategories(): Set<String>
+    }
+
+    IndexManager ..> SearchResultList : returns
+    IndexManager ..> URLStrategy : uses
+    IndexManager ..> WeblogEntry : indexes
+    SearchResultList ..> WeblogEntryWrapper : contains
+
+}
+
+' ==================== BUSINESS LAYER - LUCENE IMPLEMENTATION ====================
+
+class IndexReader <<external>>
+class Analyzer <<external>>
+class ScoreDoc <<external>>
+
+
+package "org.apache.roller.weblogger.business.search.lucene" #DDFFDD {
+    
+    class LuceneIndexManager {
+        - reader: IndexReader
+        - roller: Weblogger
+        - searchEnabled: boolean
+        - indexDir: String
+        - indexConsistencyMarker: File
+        - inconsistentAtStartup: boolean
+        - rwl: ReadWriteLock
+        --
+        # LuceneIndexManager(roller: Weblogger)
+        + initialize(): void
+        + rebuildWeblogIndex(): void
+        + rebuildWeblogIndex(weblog: Weblog): void
+        + removeWeblogIndex(weblog: Weblog): void
+        + addEntryIndexOperation(entry: WeblogEntry): void
+        + addEntryReIndexOperation(entry: WeblogEntry): void
+        + removeEntryIndexOperation(entry: WeblogEntry): void
+        + search(term: String, weblogHandle: String, category: String, locale: String, pageNum: int, entryCount: int, urlStrategy: URLStrategy): SearchResultList
+        - instantiateAnalyzer(): Analyzer
+        + getAnalyzer(): Analyzer
+        - instantiateDefaultAnalyzer(): Analyzer
+        - scheduleIndexOperation(op: IndexOperation): void
+        - executeIndexOperation(op: IndexOperation): void
+        + resetSharedReader(): void
+        + getReadWriteLock(): ReadWriteLock
+        + getSharedIndexReader(): IndexReader
+        + getIndexDirectory(): Directory
+        + resetSharedReader(): void
+        + {static} getAnalyzer(): Analyzer
+        + isInconsistentAtStartup(): boolean
+        - indexExists(): boolean
+        - createIndex(dir: Directory): void
+        - deleteIndex(): void
+        + shutdown(): void
+        + release(): void
+        + convertHitsToEntryList(hits: ScoreDoc[], search: SearchOperation, pageNum: int, entryCount: int, weblogHandle: String, webSpecificSearch: boolean, urlStrategy: URLStrategy): SearchResultList
+    }
+
+    LuceneIndexManager ..> Weblogger : uses
+    LuceneIndexManager ..> IndexReader : uses
+    LuceneIndexManager ..> Analyzer : uses
+    LuceneIndexManager ..> ScoreDoc : uses
+    LuceneIndexManager ..> IndexOperation : schedules
+    LuceneIndexManager ..> SearchResultList : returns
+    LuceneIndexManager --|> IndexManager
+
+    abstract class IndexOperation implements Runnable {
+        # manager: LuceneIndexManager
+        - writer: IndexWriter
+        --
+        + IndexOperation(manager: LuceneIndexManager)
+        # getDocument(data: WeblogEntry): Document
+        # beginWriting(): IndexWriter
+        # endWriting(): void
+        + run(): void
+        # {abstract} doRun(): void
+    }
+
+    IndexOperation ..> LuceneIndexManager : references
+    IndexOperation ..> WeblogEntry : indexes
+    IndexOperation ..> Document : uses
+    IndexOperation ..> IndexWriter : uses
+
+    abstract class WriteToIndexOperation extends IndexOperation {
+        --
+        + WriteToIndexOperation(mgr: LuceneIndexManager)
+        + run(): void
+    }
+
+    WriteToIndexOperation ..> LuceneIndexManager : references
+
+    abstract class ReadFromIndexOperation extends IndexOperation {
+        --
+        + ReadFromIndexOperation(mgr: LuceneIndexManager)
+        + run(): void
+    }
+
+    ReadFromIndexOperation ..> LuceneIndexManager : references
+
+    class AddEntryOperation extends WriteToIndexOperation {
+        - data: WeblogEntry
+        - roller: Weblogger
+        --
+        + AddEntryOperation(roller: Weblogger, mgr: LuceneIndexManager, data: WeblogEntry)
+        # doRun(): void
+    }
+
+    AddEntryOperation ..> Weblogger : uses
+    AddEntryOperation ..> WeblogEntry : indexes
+    AddEntryOperation ..> LuceneIndexManager : references
+
+    class RemoveEntryOperation extends WriteToIndexOperation {
+        - data: WeblogEntry
+        - roller: Weblogger
+        --
+        + RemoveEntryOperation(roller: Weblogger, mgr: LuceneIndexManager, data: WeblogEntry)
+        # doRun(): void
+    }
+    RemoveEntryOperation ..> Weblogger : uses
+    RemoveEntryOperation ..> WeblogEntry : indexes
+    RemoveEntryOperation ..> LuceneIndexManager : references
+
+    class ReIndexEntryOperation extends WriteToIndexOperation {
+        - data: WeblogEntry
+        - roller: Weblogger
+        --
+        + ReIndexEntryOperation(roller: Weblogger, mgr: LuceneIndexManager, data: WeblogEntry)
+        # doRun(): void
+    }
+    ReIndexEntryOperation ..> Weblogger : uses
+    ReIndexEntryOperation ..> WeblogEntry : indexes
+    ReIndexEntryOperation ..> LuceneIndexManager : references
+
+    class RebuildWebsiteIndexOperation extends WriteToIndexOperation {
+        - weblog: Weblog
+        - roller: Weblogger
+        --
+        + RebuildWebsiteIndexOperation(roller: Weblogger, mgr: LuceneIndexManager, weblog: Weblog)
+        # doRun(): void
+    }
+    RebuildWebsiteIndexOperation ..> Weblogger : uses
+    RebuildWebsiteIndexOperation ..> Weblog : indexes
+    RebuildWebsiteIndexOperation ..> LuceneIndexManager : references
+
+    class RemoveWebsiteIndexOperation extends WriteToIndexOperation {
+        - weblog: Weblog
+        - roller: Weblogger
+        --
+        + RemoveWebsiteIndexOperation(roller: Weblogger, mgr: LuceneIndexManager, weblog: Weblog)
+        # doRun(): void
+    }
+    RemoveWebsiteIndexOperation ..> Weblogger : uses
+    RemoveWebsiteIndexOperation ..> Weblog : indexes
+    RemoveWebsiteIndexOperation ..> LuceneIndexManager : references
+
+    class SearchOperation extends ReadFromIndexOperation {
+        - searcher: IndexSearcher
+        - searchresults: TopFieldDocs
+        - term: String
+        - weblogHandle: String
+        - category: String
+        - locale: String
+        - parseError: String
+        - SEARCH_FIELDS: String[] {static, final}
+        - SORTER: Sort {static, final}
+        --
+        + SearchOperation(mgr: IndexManager)
+        + setTerm(term: String): void
+        + doRun(): void
+        + getSearcher(): IndexSearcher
+        + setSearcher(searcher: IndexSearcher): void
+        + getResults(): TopFieldDocs
+        + getResultsCount(): int
+        + getParseError(): String
+        + setWeblogHandle(handle: String): void
+        + setCategory(category: String): void
+        + setLocale(locale: String): void
+    }
+
+    SearchOperation ..> LuceneIndexManager : references
+    SearchOperation ..> IndexSearcher : uses
+    SearchOperation ..> TopFieldDocs : uses
+    SearchOperation ..> Sort : uses
+
+    class FieldConstants {
+        + {static, final} ANCHOR: String = "anchor"
+        + {static, final} UPDATED: String = "updated"
+        + {static, final} ID: String = "id"
+        + {static, final} USERNAME: String = "username"
+        + {static, final} CATEGORY: String = "cat"
+        + {static, final} TITLE: String = "title"
+        + {static, final} PUBLISHED: String = "published"
+        + {static, final} CONTENT: String = "content"
+        + {static, final} C_CONTENT: String = "comment"
+        + {static, final} C_EMAIL: String = "email"
+        + {static, final} C_NAME: String = "name"
+        + {static, final} WEBSITE_HANDLE: String = "handle"
+        + {static, final} LOCALE: String = "locale"
+    }
+
+    class IndexUtil <<utility>> {
+        --
+        + {static} getTerm(field: String, input: String): Term
+    }
+
+    IndexUtil ..> Term : uses
+}
+
+' ==================== UI LAYER - SERVLETS ====================
+
+package "org.apache.roller.weblogger.ui.rendering.servlets" #EEEEFF {
+    
+     
+
+    SearchServlet ..> HttpServletRequest : uses
+    SearchServlet ..> HttpServletResponse : uses
+}
+
+' ==================== UI LAYER - REQUEST ====================
+
+package "org.apache.roller.weblogger.ui.rendering.util" #fff8ee {
+    package "mobile"{
+        enum DeviceType {
+            standard
+            mobile
+        }
+        class MobileDeviceRepository {
+            + {static} isMobileDevice(request: HttpServletRequest): boolean
+            + {static} getRequestType(request: HttpServletRequest): DeviceType
+        }
+        MobileDeviceRepository ..> HttpServletRequest : uses
+        MobileDeviceRepository ..> DeviceType : includes
+    }
+    abstract class ParsedRequest {
+        request: HttpServletRequest
+        - authenticUser: String
+        - user: User
+        - deviceType: MobileDeviceRepository.DeviceType
+        --
+        + ParsedRequest()
+        + ParsedRequest(request: HttpServletRequest)
+        + getAuthenticUser(): String
+        + setAuthenticUser(authenticUser: String): void
+        + getUser(): User
+        + setUser(user: User): void
+        + isLoggedIn(): boolean
+        + getDeviceType(): MobileDeviceRepository.DeviceType
+        + setDeviceType(deviceType: MobileDeviceRepository.DeviceType): void
+    }
+
+    ParsedRequest ..> HttpServletRequest : uses
+    ParsedRequest ..> User : uses
+    ParsedRequest ..> MobileDeviceRepository.DeviceType : uses
+    
+    class WeblogSearchRequest extends ParsedRequest {
+        - weblogHandle: String
+        - locale: String
+        - pathInfo: String
+        - weblog: Weblog
+        - localeInstance: Locale
+        --
+        + WeblogSearchRequest()
+        + WeblogSearchRequest(request: HttpServletRequest)
+        # isLocale(potentialLocale: String): boolean
+        + getWeblogHandle(): String
+        + setWeblogHandle(weblogHandle: String): void
+        + getLocale(): String
+        + setLocale(locale: String): void
+        + getPathInfo(): String
+        + setPathInfo(pathInfo: String): void
+        + getWeblog(): Weblog
+        + setWeblog(weblog: Weblog): void
+        + getLocaleInstance(): Locale
+        + setLocaleInstance(localeInstance: Locale): void
+    }
+
+    WeblogSearchRequest ..> HttpServletRequest : uses
+    WeblogSearchRequest ..> Weblog : uses
+    WeblogSearchRequest ..> Locale : uses
+
+   
+    WeblogRequest ..> HttpServletRequest : uses
+    WeblogRequest ..> Weblog : uses
+    WeblogRequest ..> Locale : uses
+
+    
+    WeblogPageRequest ..> HttpServletRequest : uses
+    WeblogPageRequest ..> WeblogEntry : uses
+    WeblogPageRequest ..> ThemeTemplate : uses
+    WeblogPageRequest ..> WeblogCategory : uses
+
+    class WeblogEntryCommentForm {
+        - error : boolean
+        - message : String
+        - name : String
+        - email : String
+        - url : String
+        - content : String
+        - notify : boolean
+        - previewComment : WeblogEntryComment
+        --
+        + WeblogEntryCommentForm()
+        + setPreview(preview : WeblogEntryComment) : void
+        + setData(comment : WeblogEntryComment) : void
+        + setError(errorMessage : String) : void
+        + getPreviewComment() : WeblogEntryCommentWrapper
+        + isPreview() : boolean
+        + getName() : String
+        + setName(name : String) : void
+        + getEmail() : String
+        + setEmail(email : String) : void
+        + getUrl() : String
+        + setUrl(url : String) : void
+        + getContent() : String
+        + setContent(content : String) : void
+        + isNotify() : boolean
+        + setNotify(notify : boolean) : void
+        + isError() : boolean
+        + setError(error : boolean) : void
+        + getMessage() : String
+        + setMessage(message : String) : void
+    }
+
+    
+}
+
+' ==================== UI LAYER - MODEL ====================
+
+package "org.apache.roller.weblogger.ui.rendering.model" #eeffee {
+
+    interface Model {
+        + getModelName(): String
+        + init(initData: Map<String, Object>): void
+    }
+    
+    class PageModel implements Model {
+        - pageRequest : WeblogPageRequest
+        - urlStrategy : URLStrategy
+        - commentForm : WeblogEntryCommentForm
+        - requestParameters : Map<String,String[]>
+        - weblog : Weblog
+        - deviceType : DeviceType
+
+        + PageModel()
+        + getModelName() : String
+        + init(initData : Map<String,Object>) : void
+        + getLocale() : String
+        + getWeblog() : WeblogWrapper
+        + isPermalink() : boolean
+        + isSearchResults() : boolean
+        + getWeblogEntry() : WeblogEntryWrapper
+        + getWeblogPage() : ThemeTemplateWrapper
+        + getWeblogCategory() : WeblogCategoryWrapper
+        + getTags() : List<String>
+        + getDeviceType() : String
+        + getWeblogEntriesPager() : WeblogEntriesPager
+        + getWeblogEntriesPager(catArgument : String) : WeblogEntriesPager
+        + getWeblogEntriesPagerByTag(tagArgument : String) : WeblogEntriesPager
+        - getWeblogEntriesPager(catArgument : String, tagArgument : String) : WeblogEntriesPager
+        + getCommentForm() : WeblogEntryCommentForm
+        + getRequestParameter(paramName : String) : String
+    }
+
+    PageModel ..> Model : implements
+    PageModel ..> WeblogPageRequest : uses
+    PageModel ..> URLStrategy : uses
+    PageModel ..> WeblogEntryCommentForm : uses
+    PageModel ..> Weblog : uses
+    PageModel ..> DeviceType : uses
+    PageModel ..> WeblogWrapper : uses
+    PageModel ..> WeblogEntryWrapper : uses
+    PageModel ..> WeblogEntriesPager : uses
+    PageModel ..> ThemeTemplateWrapper : uses
+    PageModel ..> WeblogCategoryWrapper : uses
+    PageModel ..> WeblogEntriesPager : uses
+
+    class SearchResultsModel extends PageModel {
+        + {static, final} RESULTS_PER_PAGE: int = 10
+        - searchRequest: WeblogSearchRequest
+        - urlStrategy: URLStrategy
+        - results: Map<Date, Set<WeblogEntryWrapper>>
+        - pager: SearchResultsPager
+        - hits: int
+        - offset: int
+        - limit: int
+        - categories: Set<String>
+        - errorMessage: String
+        --
+        + init(initData: Map<String, Object>): void
+        - addEntryToResults(results: Map<Date, Set<WeblogEntryWrapper>>, entry: WeblogEntryWrapper): void
+        + isSearchResults(): boolean
+        + getWeblogEntriesPager(): WeblogEntriesPager
+        + getWeblogEntriesPager(category: String): WeblogEntriesPager
+        + getTerm(): String
+        + getRawTerm(): String
+        + getHits(): int
+        + getOffset(): int
+        + getLimit(): int
+        + getResults(): Map<Date, Set<WeblogEntryWrapper>>
+        + getCategories(): Set<String>
+        + getErrorMessage(): String
+        + getWeblogCategoryName(): String
+        + getWeblogCategory(): WeblogCategoryWrapper
+    }
+
+    SearchResultsModel ..> PageModel : extends
+    SearchResultsModel ..> WeblogSearchRequest : uses
+    SearchResultsModel ..> URLStrategy : uses
+    SearchResultsModel ..> WeblogEntryWrapper : uses
+    SearchResultsModel ..> WeblogEntriesPager : uses
+    SearchResultsModel ..> WeblogCategoryWrapper : uses
+}
+
+package "org.apache.roller.weblogeer.util" #eeffff {
+    class I18nMessages {
+        {static} LOG : Log
+        - locale : Locale
+        - bundle : ResourceBundle
+        {static} messagesMap : Map<Locale, I18nMessages>
+
+        - I18nMessages(locale : String)
+        - I18nMessages(locale : Locale)
+        + {static} getMessages(locale : String) : I18nMessages
+        + {static} getMessages(locale : Locale) : I18nMessages
+        + getLocale() : Locale
+        + getString(key : String) : String
+        + getString(key : String, args : List<?>) : String
+        + getString(key : String, args : Object[]) : String
+        + {static} reloadBundle(key : Locale) : void
+        - {static} clearTomcatCache() : void
+        - {static} clearMap(cl : Class<?>, obj : Object, name : String) : void
+    }
+}
+
+package "org.apache.roller.weblogger.ui.rendering.pagers" #ffeefe {
+    interface WeblogEntriesPager {
+        + getEntries() : Map<Date, ? extends Collection<WeblogEntryWrapper>>
+        + getHomeLink() : String
+        + getHomeName() : String
+        + getNextLink() : String
+        + getNextName() : String
+        + getPrevLink() : String
+        + getPrevName() : String
+        + getNextCollectionLink() : String
+        + getNextCollectionName() : String
+        + getPrevCollectionLink() : String
+        + getPrevCollectionName() : String
+    }
+    WeblogEntriesPager ..> WeblogEntryWrapper : uses
+    
+    class SearchResultsPager implements WeblogEntriesPager {
+        - messageUtils: I18nMessages
+        - urlStrategy: URLStrategy
+        - entries: Map<Date, Set<WeblogEntryWrapper>>
+        - weblog: Weblog
+        - locale: String
+        - query: String
+        - category: String
+        - page: int
+        - moreResults: boolean
+        --
+        + SearchResultsPager(strat: URLStrategy, searchRequest: WeblogSearchRequest, entries: Map<Date, Set<WeblogEntryWrapper>>, more: boolean)
+        + getEntries(): Map<Date, Set<WeblogEntryWrapper>>
+        + getHomeLink(): String
+        + getHomeName(): String
+        + getNextLink(): String
+        + getNextName(): String
+        + getPrevLink(): String
+        + getPrevName(): String
+        + getNextCollectionLink(): String
+        + getNextCollectionName(): String
+        + getPrevCollectionLink(): String
+        + getPrevCollectionName(): String
+    }
+
+    SearchResultsPager ..> I18nMessages : uses
+    SearchResultsPager ..> URLStrategy : uses
+}
+
+@enduml

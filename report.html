@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; margin: 40px auto; max-width: 800px; color: #333; padding: 0 20px; }
+h1, h2, h3 { color: #111; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+li { margin-bottom: 8px; }
+</style>
+</head>
+<body><h1>Activity 6: Architectural Documentation Report</h1>
+
+<p><strong>Repository Chosen:</strong> Apache Roller (https://github.com/apache/roller)</p>
+
+<h2>Part 1: Architecture Diagrams</h2>
+
+<p>I created three levels of diagrams for the Apache Roller repository using the C4 model:
+- <strong>C1 Diagram (System Context):</strong> This shows the big picture. It shows how the Bloggers and Readers interact with the main Apache Roller system, and how the system connects to external tools like a Database and an SMTP Email Server.
+- <strong>C2 Diagram (Container):</strong> This breaks the main system down into its major containers: the Web Application (running on Tomcat), the Relational Database, and the Lucene Search Index.
+- <strong>C3 Diagram (Component):</strong> This zooms into the Web Application container. It shows the internal components like the Struts Action Controllers, the various Managers (Weblog, User, Search), and the DAOs that talk to the database.</p>
+
+<h2>Part 2: Architectural Decision Records (ADRs)</h2>
+
+<p>I created 5 ADRs that explain the big design choices in the repository. They are saved in the <code>ADR/</code> folder:
+- <strong>ADR 1:</strong> Decided to use Struts 2 to handle all web requests and routing.
+- <strong>ADR 2:</strong> Picked Hibernate for the database ORM so developers don't have to write complex raw SQL queries.
+- <strong>ADR 3:</strong> Chose Apache Lucene for the search engine because it runs directly inside the app.
+- <strong>ADR 4:</strong> Used the Template Method pattern to handle rendering different blog text formats (like Markdown and HTML).
+- <strong>ADR 5:</strong> Used a ThreadPool to send email notifications in the background so the website doesn't freeze when users post a comment.</p>
+
+<hr />
+
+<h2>Part 3: AI Usage Report</h2>
+
+<p><strong>How I generated the artifacts (tool + approach):</strong>
+I used an AI assistant prompt to get the starting code for the C4 diagrams in PlantUML format. I also asked the AI to help me identify and draft the 5 ADRs based on the tech stack of Apache Roller.</p>
+
+<p><strong>What the initial generated version contained:</strong>
+- For the diagrams, the AI generated the starting PlantUML code. It had the general shape right, but it was too generic. It just said "Spring MVC" instead of identifying the actual framework.
+- For the ADRs, the AI wrote 5 records, but it only included the positive benefits of the decisions. It missed the negative side effects.</p>
+
+<p><strong>What changes I made:</strong>
+- <strong>Diagrams:</strong> I manually edited the PlantUML code to change generic frameworks to the exact ones used by Apache Roller (like explicitly naming Struts 2). I also added the Lucene Index into the C3 diagram. After fixing the code, I used the Kroki API to convert the code into the final PNG images.
+- <strong>ADRs:</strong> I went through all 5 markdown files and added the "Negative" consequences. For example, I added that Hibernate uses more memory, and Lucene indexes need to be synced to the file system.</p>
+
+<p><strong>Why these changes were necessary:</strong>
+The changes to the diagrams were needed because the original AI output wasn't completely accurate for Apache Roller. It looked like a generic Java app instead of this specific repository. Putting the negative consequences into the ADRs was necessary to make them realistic. In real software engineering, every choice has downsides, and an ADR shouldn't just be purely positive.</p>
+</body></html>

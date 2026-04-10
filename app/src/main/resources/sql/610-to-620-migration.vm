@@ -1,0 +1,23 @@
+## 610-to-620-migration.vm
+## Task 1A Stars
+
+create table roller_star (
+    id                     varchar(48) not null primary key,
+
+    starred_by_user_id     varchar(48) not null,
+    target_entity_type     varchar(20) not null,
+    target_entity_id       varchar(48) not null,
+    starred_at             $db.TIMESTAMP_SQL_TYPE not null
+);
+
+alter table roller_star add constraint rs_user_target_uq
+    unique (starred_by_user_id, target_entity_type, target_entity_id);
+
+create index rs_user_idx
+    on roller_star(starred_by_user_id);
+
+create index rs_target_idx
+    on roller_star(target_entity_type, target_entity_id);
+
+create index rs_target_user_idx
+    on roller_star(target_entity_type, target_entity_id, starred_by_user_id);

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+    <package>org.apache.roller.weblogger.pojos</package>
+
+    <entity metadata-complete="true" name="RollerStar"
+            class="org.apache.roller.weblogger.pojos.RollerStar" access="PROPERTY">
+        <table name="roller_star"/>
+
+        <named-query name="RollerStar.getByUserAndTarget">
+            <query>
+                SELECT s FROM RollerStar s
+                WHERE s.starredByUserId = ?1 AND s.targetEntityType = ?2 AND s.targetEntityId = ?3
+            </query>
+        </named-query>
+
+        <named-query name="RollerStar.getByUserAndType">
+            <query>
+                SELECT s FROM RollerStar s
+                WHERE s.starredByUserId = ?1 AND s.targetEntityType = ?2
+                ORDER BY s.starredAt DESC
+            </query>
+        </named-query>
+
+        <attributes>
+            <id name="id"><column name="id"/></id>
+
+            <basic name="starredByUserId">
+                <column name="starred_by_user_id" insertable="true" updatable="true" nullable="false"/>
+            </basic>
+
+            <basic name="targetEntityType">
+                <column name="target_entity_type" insertable="true" updatable="true" nullable="false"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+
+            <basic name="targetEntityId">
+                <column name="target_entity_id" insertable="true" updatable="true" nullable="false"/>
+            </basic>
+
+            <basic name="starredAt">
+                <column name="starred_at" insertable="true" updatable="true" nullable="false"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

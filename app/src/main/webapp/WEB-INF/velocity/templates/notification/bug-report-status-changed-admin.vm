@@ -1,0 +1,59 @@
+<%-- filepath: app/src/main/webapp/WEB-INF/velocity/templates/notification/bug-report-status-changed-admin.vm --%>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"/>
+<style>
+  body{margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;font-size:14px;color:#333;}
+  .wrap{max-width:620px;margin:30px auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .hdr{background:#5bc0de;color:#fff;padding:20px 24px;}
+  .hdr h2{margin:0;font-size:20px;}
+  .hdr p{margin:4px 0 0;font-size:13px;opacity:.85;}
+  .body{padding:24px;}
+  .status-flow{text-align:center;padding:20px;background:#f0f9ff;border-radius:6px;margin:16px 0;}
+  .s-old{display:inline-block;padding:6px 16px;background:#e0e0e0;color:#666;border-radius:20px;font-weight:bold;font-size:13px;}
+  .arrow{font-size:22px;margin:0 14px;color:#5bc0de;vertical-align:middle;}
+  .s-new{display:inline-block;padding:6px 16px;background:#5cb85c;color:#fff;border-radius:20px;font-weight:bold;font-size:13px;}
+  table.info{width:100%;border-collapse:collapse;margin:16px 0;}
+  table.info td{padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top;}
+  table.info td.lbl{width:140px;font-weight:bold;color:#555;white-space:nowrap;}
+  .notes{background:#fafafa;border-left:4px solid #5bc0de;border-radius:3px;padding:14px;margin-top:16px;}
+  .notes h4{margin:0 0 8px;font-size:13px;color:#2a7fa5;text-transform:uppercase;}
+  .ftr{background:#f5f5f5;padding:12px 24px;font-size:11px;color:#999;border-top:1px solid #e5e5e5;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h2>Bug Report Status Changed</h2>
+    <p>A report status has been updated</p>
+  </div>
+  <div class="body">
+    <div class="status-flow">
+      <span class="s-old">$context.oldStatus</span>
+      <span class="arrow">&rarr;</span>
+      <span class="s-new">$context.newStatus</span>
+    </div>
+
+    <table class="info">
+      <tr><td class="lbl">Title</td><td><strong>$report.title</strong></td></tr>
+      <tr><td class="lbl">Reporter</td>
+          <td>$report.creator.screenName &lt;$report.creator.emailAddress&gt;</td></tr>
+      <tr><td class="lbl">Category</td><td>$report.category</td></tr>
+      <tr><td class="lbl">Severity</td><td>$report.severity</td></tr>
+      <tr><td class="lbl">Changed By</td><td>$context.changedBy</td></tr>
+      <tr><td class="lbl">Updated At</td><td>$report.updatedAt</td></tr>
+    </table>
+
+    #if($report.adminNotes && $report.adminNotes != "")
+    <div class="notes">
+      <h4>Admin Notes</h4>
+      <p style="margin:0;white-space:pre-wrap;">$report.adminNotes</p>
+    </div>
+    #end
+  </div>
+  <div class="ftr">
+    Apache Roller Bug Tracker &mdash; Automated Notification &mdash; Do not reply
+  </div>
+</div>
+</body>
+</html>

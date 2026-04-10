@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src *; base-uri 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'">
+    <title>$model.weblog.name</title>
+    #showAutodiscoveryLinks($model.weblog)
+    #showAnalyticsTrackingCode($model.weblog)
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" media="all" href="$model.weblog.stylesheet">
+    #showMetaDescription()
+    <script>
+      $(document).ready(function () {
+        $('#btnMobile').on('click', function() {
+           setCookie("roller_user_request_type","mobile",30);
+           $("#btnMobile").attr('href', '?deviceType=mobile').click();
+        });
+      });
+      function setCookie(c_name, value, exdays) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString() + "; path=/");
+        document.cookie = c_name + "=" + c_value;
+      }
+    </script>
+</head>
+<!-- weblog -->
+<body>
+
+<div id="id_weblog" class="content_wrapper">
+  <div class="content">
+    <h1 class="weblogName">$model.weblog.name</h1>
+    #set($weblogStarCount = $model.getWeblogStarCount($model.weblog.id))
+    #if($utils.isUserAuthenticated())
+      #set($starActionStar = $url.action('starAction!star', '/roller-ui/authoring'))
+      #set($starActionUnstar = $url.action('starAction!unstar', '/roller-ui/authoring'))
+      #set($returnHome = $utils.getRequest().getRequestURL().toString())
+      #set($queryString = $utils.getRequest().getQueryString())
+      #if($queryString)
+        #set($returnHome = "${returnHome}?${queryString}")
+      #end
+      #set($returnHome = $utils.encode($returnHome))
+      <p class="entryInfo">
+        #if($model.isWeblogStarred($model.weblog.id))
+          <a href="${starActionUnstar}&targetType=WEBLOG&targetId=${model.weblog.id}&returnTo=${returnHome}">&#9733; Unstar this weblog</a> (Stars: $weblogStarCount)
+        #else
+          <a href="${starActionStar}&targetType=WEBLOG&targetId=${model.weblog.id}&returnTo=${returnHome}">&#9734; Star this weblog</a> (Stars: $weblogStarCount)
+        #end
+      </p>
+    #else
+      <p class="entryInfo">&#9733; Stars: $weblogStarCount</p>
+    #end
+
+        <center>
+        #showWeblogCategoryLinksList()
+        </center>
+
+        ## show next/previous paging controls
+        #set($pager = $model.getWeblogEntriesPager()) 
+        <div class="next-previous">
+            #showNextPrevEntriesControl($pager)
+        </div>
+
+        ## Translation widget wrapper
+        <div id="roller-translation-content">
+        ## show entries
+        #showWeblogEntriesPager($pager)
+        </div>## end roller-translation-content
+
+  </div>
+</div>
+
+<div class="rightbar_wrapper">
+  <div class="rightbar">
+    <div class="mobile">
+        <a id="btnMobile" href="#" alt="View Mobile Weblog">View Mobile Weblog</a>
+    </div>
+    #includeTemplate($model.weblog "sidebar")
+  </div>
+</div>
+
+<script src="$url.absoluteSite/roller-ui/scripts/translation.js?v=5" defer></script>
+
+<!-- Weblog Q&A Chatbot -->
+<link rel="stylesheet" href="$url.absoluteSite/roller-ui/styles/chatbot.css" />
+<script>window.ROLLER_CHATBOT_WEBLOG_ID = '$model.weblog.id';</script>
+<script src="$url.absoluteSite/roller-ui/scripts/chatbot.js?v=1" defer></script>
+
+</body>
+</html>

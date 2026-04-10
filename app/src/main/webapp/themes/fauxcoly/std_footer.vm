@@ -1,0 +1,16 @@
+<hr />
+<div id="legal">
+    <p>Copyright $model.weblog.creator.fullName</p>
+    <p>Licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Attribution-Noncommercial-Share Alike 2.5 Generic</a></p>
+    <p>This is a personal weblog. <i>I do not speak for my employer.</i></p>
+</div>
+<div id="poweredby">
+    <p><img src='$url.resource("icons/asf-logo.png")' border="0" alt="Apache feather" /></p>
+    <p>Powered by <a href="http://roller.apache.org">Apache Roller</a></p>
+</div>
+<script src="$url.absoluteSite/roller-ui/scripts/translation.js?v=5" defer></script>
+
+<!-- Weblog Q&A Chatbot -->
+<link rel="stylesheet" href="$url.absoluteSite/roller-ui/styles/chatbot.css" />
+<script>window.ROLLER_CHATBOT_WEBLOG_ID = '$model.weblog.id';</script>
+<script src="$url.absoluteSite/roller-ui/scripts/chatbot.js?v=1" defer></script>

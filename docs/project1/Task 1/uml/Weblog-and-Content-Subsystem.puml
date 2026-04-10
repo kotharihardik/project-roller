@@ -1,0 +1,1751 @@
+@startuml Complete Apache Roller System Relationships
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+
+title Apache Roller - Complete System with All Relationship Types
+
+package "User subsystem"{
+  interface UserManager{}
+  class User{}
+  abstract class RollerPermission extends Permission{}
+  abstract class ObjectPermission extends RollerPermission{}
+  abstract class WeblogPermission extends ObjectPermission{}
+}
+package "org.apache.roller.weblogger.pojos" #DDDDFF {
+
+  WeblogPermission --> User : grants to
+  WeblogPermission --> Weblog : for weblog
+  WeblogPermission --> Permission : uses
+  
+  class Weblog {
+    - {static} serialVersionUID: long
+    - {static} MAX_ENTRIES: int
+    - id: String
+    - handle: String
+    - name: String
+    - tagline: String
+    - enableBloggerApi: Boolean
+    - editorPage: String
+    - bannedwordslist: String
+    - allowComments: Boolean
+    - emailComments: Boolean
+    - emailAddress: String
+    - editorTheme: String
+    - locale: String
+    - timeZone: String
+    - defaultPlugins: String
+    - visible: Boolean
+    - active: Boolean
+    - dateCreated: Date
+    - defaultAllowComments: Boolean
+    - defaultCommentDays: int
+    - moderateComments: Boolean
+    - entryDisplayCount: int
+    - lastModified: Date
+    - enableMultiLang: boolean
+    - showAllLangs: boolean
+    - iconPath: String
+    - about: String
+    - creator: String
+    - analyticsCode: String
+    - bloggerCategory: WeblogCategory
+    - initializedPlugins: Map<String, WeblogEntryPlugin>
+    - weblogCategories: List<WeblogCategory>
+    - bookmarkFolders: List<WeblogBookmarkFolder>
+    - mediaFileDirectories: List<MediaFileDirectory>
+    --
+    + Weblog()
+    + Weblog(handle: String, creator: String, name: String, desc: String, email: String, editorTheme: String, locale: String, timeZone: String)
+
+    + getId(): String
+    + setId(id: String): void
+    + getHandle(): String
+    + setHandle(handle: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getTagline(): String
+    + setTagline(tagline: String): void
+    + getEmailAddress(): String
+    + setEmailAddress(emailAddress: String): void
+    + getEditorTheme(): String
+    + setEditorTheme(editorTheme: String): void
+    + getLocale(): String
+    + setLocale(locale: String): void
+    + getTimeZone(): String
+    + setTimeZone(timeZone: String): void
+    + getVisible(): Boolean
+    + setVisible(visible: Boolean): void
+    + getActive(): Boolean
+    + setActive(active: Boolean): void
+    + getDateCreated(): Date
+    + setDateCreated(dateCreated: Date): void
+    + getLastModified(): Date
+    + setLastModified(lastModified: Date): void
+    + getCreator(): User
+    + getCreatorUserName(): String
+    + setCreatorUserName(username: String): void
+
+    + getAllowComments(): Boolean
+    + setAllowComments(allowComments: Boolean): void
+    + getDefaultAllowComments(): Boolean
+    + setDefaultAllowComments(defaultAllowComments: Boolean): void
+    + getModerateComments(): Boolean
+    + setModerateComments(moderateComments: Boolean): void
+    + getEntryDisplayCount(): int
+    + setEntryDisplayCount(entryDisplayCount: int): void
+
+    + getWeblogCategories(): List<WeblogCategory>
+    + setWeblogCategories(cats: List<WeblogCategory>): void
+    + getBookmarkFolders(): List<WeblogBookmarkFolder>
+    + setBookmarkFolders(folders: List<WeblogBookmarkFolder>): void
+    + getMediaFileDirectories(): List<MediaFileDirectory>
+    + setMediaFileDirectories(dirs: List<MediaFileDirectory>): void
+
+    + hasCategory(name: String): boolean
+    + hasBookmarkFolder(name: String): boolean
+    + hasMediaFileDirectory(name: String): boolean
+
+    + getTheme(): WeblogTheme
+    + getURL(): String
+    + getAbsoluteURL(): String
+
+    + hasUserPermission(user: User, action: String): boolean
+    + hasUserPermissions(user: User, actions: List<String>): boolean
+
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+  Weblog "1" *-- "0..*" WeblogCategory : owns
+  Weblog "1" *-- "0..*" WeblogEntry : owns
+  Weblog "1" *-- "0..*" WeblogBookmarkFolder : owns
+  Weblog "1" *-- "0..*" MediaFileDirectory : owns
+  Weblog "1" *-- "0..*" WeblogTemplate : owns
+  Weblog "1" *-- "0..*" WeblogBookmarkFolder : owns
+  User "1" o-- "0..*" Weblog : has permissions for
+  
+  class WeblogEntry  {
+    - {static} serialVersionUID: long
+    - {static} mLogger: Log
+    - {static} TITLE_SEPARATOR: char
+    - id: String
+    - title: String
+    - link: String
+    - summary: String
+    - text: String
+    - contentType: String
+    - contentSrc: String
+    - anchor: String
+    - pubTime: Timestamp
+    - updateTime: Timestamp
+    - plugins: String
+    - allowComments: Boolean
+    - commentDays: Integer
+    - rightToLeft: Boolean
+    - pinnedToMain: Boolean
+    - status: PubStatus
+    - locale: String
+    - creatorUserName: String
+    - searchDescription: String
+    - refreshAggregates: Boolean
+    - website: Weblog
+    - category: WeblogCategory
+    - attSet: Set<WeblogEntryAttribute>
+    - tagSet: Set<WeblogEntryTag>
+    - removedTags: Set<WeblogEntryTag>
+    - addedTags: Set<WeblogEntryTag>
+    --
+    + WeblogEntry()
+    + WeblogEntry(id: String, category: WeblogCategory, website: Weblog, creator: User, title: String, link: String, text: String, anchor: String, pubTime: Timestamp, updateTime: Timestamp, status: PubStatus)
+    + WeblogEntry(other: WeblogEntry)
+    + getId(): String
+    + setId(id: String): void
+    + getTitle(): String
+    + setTitle(title: String): void
+    + getSummary(): String
+    + setSummary(summary: String): void
+    + getText(): String
+    + setText(text: String): void
+    + getAnchor(): String
+    + setAnchor(anchor: String): void
+    + getWebsite(): Weblog
+    + setWebsite(website: Weblog): void
+    + getCategory(): WeblogCategory
+    + setCategory(category: WeblogCategory): void
+    + getCreatorUserName(): String
+    + setCreatorUserName(username: String): void
+    + getTags(): Set<WeblogEntryTag>
+    + setTags(tags: Set<WeblogEntryTag>): void
+    + addTag(name: String): void
+    + getTagsAsString(): String
+    + setTagsAsString(tags: String): void
+    + getPubTime(): Timestamp
+    + setPubTime(pubTime: Timestamp): void
+    + getUpdateTime(): Timestamp
+    + setUpdateTime(updateTime: Timestamp): void
+    + getStatus(): PubStatus
+    + setStatus(status: PubStatus): void
+    + getAllowComments(): Boolean
+    + setAllowComments(allowComments: Boolean): void
+    + getPinnedToMain(): Boolean
+    + setPinnedToMain(pinnedToMain: Boolean): void
+    + getLocale(): String
+    + setLocale(locale: String): void
+    + getPermalink(): String
+    + getDisplayTitle(): String
+    + getDisplayContent(): String
+    + hasWritePermissions(user: User): boolean
+    + getCommentsStillAllowed(): boolean
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+  User "1" --> "0..*" WeblogEntry : creates
+  WeblogEntry "1" *-- "0..*" WeblogEntryTag : owns tags
+  WeblogEntry "1" *-- "0..*" WeblogEntryComment : owns comments
+  WeblogEntry "1" *-- "0..*" WeblogEntryAttribute : owns attributes
+  WeblogEntry "0..*" --> "1" Weblog : belongs to
+  WeblogEntry "0..*" --> "1" WeblogCategory : categorized in
+  WeblogEntry "1" -- "0..*" WeblogEntryTag : tagged with
+  WeblogEntry +-- PubStatus : nested enum
+
+  class WeblogCategory  {
+    - {static} serialVersionUID: long
+    - id: String
+    - name: String
+    - description: String
+    - image: String
+    - position: int
+    - weblog: Weblog
+    --
+    + WeblogCategory()
+    + WeblogCategory(weblog: Weblog, name: String, description: String, image: String)
+    + calculatePosition(): void
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getImage(): String
+    + setImage(image: String): void
+    + getPosition(): int
+    + setPosition(position: int): void
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + retrieveWeblogEntries(publishedOnly: boolean): List<WeblogEntry>
+    + isInUse(): boolean
+    + compareTo(other: WeblogCategory): int
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+  
+  class WeblogEntryComment  {
+    - {static} serialVersionUID: long
+    - id: String
+    - name: String
+    - email: String
+    - url: String
+    - content: String
+    - postTime: Timestamp
+    - status: ApprovalStatus
+    - notify: Boolean
+    - remoteHost: String
+    - referrer: String
+    - userAgent: String
+    - plugins: String
+    - contentType: String
+    - weblogEntry: WeblogEntry
+    --
+    + WeblogEntryComment()
+    + getId(): String
+    + setId(id: String): void
+    + getWeblogEntry(): WeblogEntry
+    + setWeblogEntry(entry: WeblogEntry): void
+    + getName(): String
+    + setName(name: String): void
+    + getEmail(): String
+    + setEmail(email: String): void
+    + getUrl(): String
+    + setUrl(url: String): void
+    + getContent(): String
+    + setContent(content: String): void
+    + getPostTime(): Timestamp
+    + setPostTime(postTime: Timestamp): void
+    + getStatus(): ApprovalStatus
+    + setStatus(status: ApprovalStatus): void
+    + getNotify(): Boolean
+    + setNotify(notify: Boolean): void
+    + getRemoteHost(): String
+    + setRemoteHost(remoteHost: String): void
+    + getReferrer(): String
+    + setReferrer(referrer: String): void
+    + getUserAgent(): String
+    + setUserAgent(userAgent: String): void
+    + getPlugins(): String
+    + setPlugins(plugins: String): void
+    + getContentType(): String
+    + setContentType(contentType: String): void
+    + getSpam(): Boolean
+    + getPending(): Boolean
+    + getApproved(): Boolean
+    + getTimestamp(): String
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+  WeblogEntryComment +-- ApprovalStatus : nested enum
+
+  class WeblogEntryTag  {
+    - {static} log: Log
+    - {static} serialVersionUID: long
+    - id: String
+    - website: Weblog
+    - weblogEntry: WeblogEntry
+    - userName: String
+    - name: String
+    - time: Timestamp
+    --
+    + WeblogEntryTag()
+    + WeblogEntryTag(id: String, website: Weblog, weblogEntry: WeblogEntry, user: User, name: String, time: Timestamp)
+    + getId(): String
+    + setId(id: String): void
+    + getWeblog(): Weblog
+    + setWeblog(website: Weblog): void
+    + getWeblogEntry(): WeblogEntry
+    + setWeblogEntry(entry: WeblogEntry): void
+    + getUser(): User
+    + getCreatorUserName(): String
+    + setCreatorUserName(userName: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getTime(): Timestamp
+    + setTime(time: Timestamp): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+  class WeblogEntryAttribute  {
+    - id: String
+    - entry: WeblogEntry
+    - name: String
+    - value: String
+    --
+    + WeblogEntryAttribute()
+    + getId(): String
+    + setId(id: String): void
+    + getEntry(): WeblogEntry
+    + setEntry(entry: WeblogEntry): void
+    + getName(): String
+    + setName(name: String): void
+    + getValue(): String
+    + setValue(value: String): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+    + compareTo(att: WeblogEntryAttribute): int
+  }
+
+  class WeblogBookmarkFolder  {
+    - {static} serialVersionUID: long
+    - id: String
+    - name: String
+    - weblog: Weblog
+    - bookmarks: List<WeblogBookmark>
+    --
+    + WeblogBookmarkFolder()
+    + WeblogBookmarkFolder(name: String, weblog: Weblog)
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getBookmarks(): List<WeblogBookmark>
+    + addBookmark(bookmark: WeblogBookmark): void
+    + hasBookmarkOfName(bookmarkName: String): boolean
+    + retrieveBookmarks(): List<WeblogBookmark>
+    + compareTo(other: WeblogBookmarkFolder): int
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+  WeblogBookmarkFolder "1" *-- "0..*" WeblogBookmark : contains 
+
+  class MediaFileDirectory {
+    - id: String
+    - name: String
+    - description: String
+    - weblog: Weblog
+    - mediaFiles: Set<MediaFile>
+    --
+    + MediaFileDirectory()
+    + MediaFileDirectory(weblog: Weblog, name: String, desc: String)
+    + isEmpty(): boolean
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getMediaFiles(): Set<MediaFile>
+    + setMediaFiles(mediaFiles: Set<MediaFile>): void
+    + hasMediaFile(name: String): boolean
+    + getMediaFile(name: String): MediaFile
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+  MediaFileDirectory "1" *-- "0..*" MediaFile : contains
+
+  class MediaFile {
+    - id: String
+    - name: String
+    - description: String
+    - copyrightText: String
+    - isSharedForGallery: Boolean
+    - length: long
+    - width: int
+    - height: int
+    - thumbnailWidth: int
+    - thumbnailHeight: int
+    - contentType: String
+    - originalPath: String
+    - dateUploaded: Timestamp
+    - lastUpdated: Timestamp
+    - creatorUserName: String
+    - weblog: Weblog
+    - directory: MediaFileDirectory
+    - content: FileContent
+    - thumbnail: FileContent
+    - tagSet: Set<MediaFileTag>
+    - removedTags: Set<String>
+    - addedTags: Set<String>
+    --
+    + MediaFile()
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getCopyrightText(): String
+    + setCopyrightText(copyrightText: String): void
+    + getIsSharedForGallery(): Boolean
+    + setIsSharedForGallery(isSharedForGallery: Boolean): void
+    + getContentType(): String
+    + setContentType(contentType: String): void
+    + getPath(): String
+    + getInputStream(): InputStream
+    + setInputStream(contentStream: InputStream): void
+    + setContent(content: FileContent): void
+    + getDateUploaded(): Timestamp
+    + setDateUploaded(dateUploaded: Timestamp): void
+    + getLastUpdated(): Timestamp
+    + setLastUpdated(lastUpdated: Timestamp): void
+
+    + getLength(): long
+    + setLength(length: long): void
+    + onRemoveTag(name: String): void
+    + getAddedTags(): Set<String>
+    + getRemovedTags(): Set<String>
+    + getWidth(): int
+    + setWidth(width: int): void
+    + getTagsAsString(): String
+    + setTagsAsString(tags: String): void
+    + getHeight(): int
+    + setHeight(height: int): void
+
+    + getDirectory(): MediaFileDirectory
+    + setDirectory(directory: MediaFileDirectory): void
+
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getCreatorUserName(): String
+    + setCreatorUserName(creatorUserName: String): void
+    + getCreator(): User
+    + getOriginalPath(): String
+    + setOriginalPath(originalPath: String): void
+    + getWeblog(): String
+    + setWeblog(handle: String): void
+    + isImageFile(): boolean
+    + getPermalink(): String
+    + getThumbnailURL(): String
+    + getThumbnailInputStream(): InputStream
+    + setThumbnailContent(thumbnailStream: InputStream): void
+    + getThumbnailHeight(): int
+    + getThumbnailWidth(): int
+    - figureThumbnailSize(): void
+    + getTags(): Set<MediaFileTag>
+    + addTag(name: String): void
+    + updateTags(tags: List<String>): void
+
+    + equals(other: Object): boolean
+    + hashCode(): int
+    + toString(): String
+  }
+
+  MediaFile ..> Weblog : belongs to
+  MediaFile "1" --> "*" MediaFileTag : has tags
+
+  class MediaFileFilter {
+    - name: String
+    - type: MediaFileType
+    - size: long
+    - sizeFilterType: SizeFilterType
+    - tags: List<String>
+    - order: MediaFileOrder
+    - startIndex: int
+    - length: int
+    --
+    + getName(): String
+    + setName(name: String): void
+    + getType(): MediaFileType
+    + setType(type: MediaFileType): void
+    + getTags(): List<String>
+    + setTags(tags: List<String>): void
+    + getSize(): long
+    + setSize(size: long): void
+    + getSizeFilterType(): SizeFilterType
+    + setSizeFilterType(sizeFilterType: SizeFilterType): void
+    + getStartIndex(): int
+    + setStartIndex(startIndex: int): void
+    + getLength(): int
+    + setLength(length: int): void
+    + getOrder(): MediaFileOrder
+    + setOrder(order: MediaFileOrder): void
+  }
+  enum SizeFilterType {
+    GT, GTE, EQ, LT, LTE
+  }
+
+  enum MediaFileOrder {
+    NAME, DATE_UPLOADED, TYPE
+  }
+  class WeblogEntrySearchCriteria {
+    - weblog: Weblog
+    - user: User
+    - startDate: Date
+    - endDate: Date
+    - catName: String
+    - tags: List<String>
+    - status: PubStatus
+    - text: String
+    - sortBy: SortBy
+    - sortOrder: SortOrder
+    - locale: String
+    - offset: int
+    - maxResults: int
+    --
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getUser(): User
+    + setUser(user: User): void
+    + getStartDate(): Date
+    + setStartDate(startDate: Date): void
+    + getEndDate(): Date
+    + setEndDate(endDate: Date): void
+    + getCatName(): String
+    + setCatName(catName: String): void
+    + getTags(): List<String>
+    + setTags(tags: List<String>): void
+    + getStatus(): PubStatus
+    + setStatus(status: PubStatus): void
+    + getText(): String
+    + setText(text: String): void
+    + getSortBy(): SortBy
+    + setSortBy(sortBy: SortBy): void
+    + getSortOrder(): SortOrder
+    + setSortOrder(sortOrder: SortOrder): void
+    + getLocale(): String
+    + setLocale(locale: String): void
+    + getOffset(): int
+    + setOffset(offset: int): void
+    + getMaxResults(): int
+    + setMaxResults(maxResults: int): void
+  }
+  enum SortBy {
+    PUBLICATION_TIME
+    UPDATE_TIME
+  }
+
+  enum SortOrder {
+    ASCENDING
+    DESCENDING
+  }
+
+  WeblogEntrySearchCriteria --> SortBy : uses
+  WeblogEntrySearchCriteria --> SortOrder : uses
+  WeblogEntrySearchCriteria ..> WeblogEntry : filters
+  WeblogEntrySearchCriteria --> Weblog : uses
+  WeblogEntrySearchCriteria --> PubStatus : uses
+
+  class CommentSearchCriteria {
+    - weblog: Weblog
+    - entry: WeblogEntry
+    - searchText: String
+    - startDate: Date
+    - endDate: Date
+    - status: ApprovalStatus
+    - reverseChrono: boolean
+    - offset: int
+    - maxResults: int
+    --
+    + CommentSearchCriteria()
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getEntry(): WeblogEntry
+    + setEntry(entry: WeblogEntry): void
+    + getSearchText(): String
+    + setSearchText(searchText: String): void
+    + getStartDate(): Date
+    + setStartDate(startDate: Date): void
+    + getEndDate(): Date
+    + setEndDate(endDate: Date): void
+    + getStatus(): ApprovalStatus
+    + setStatus(status: ApprovalStatus): void
+    + isReverseChrono(): boolean
+    + setReverseChrono(reverseChrono: boolean): void
+    + getOffset(): int
+    + setOffset(offset: int): void
+    + getMaxResults(): int
+    + setMaxResults(maxResults: int): void
+  }
+  CommentSearchCriteria --> Weblog
+  CommentSearchCriteria --> WeblogEntry
+  CommentSearchCriteria --> ApprovalStatus
+  CommentSearchCriteria ..> WeblogEntryComment : filters
+
+  class TagStat {
+    - name: String
+    - count: int
+    - intensity: int
+    --
+    + TagStat()
+    + getName(): String
+    + setName(name: String): void
+    + getCount(): int
+    + setCount(count: int): void
+    + getIntensity(): int
+    + setIntensity(intensity: int): void
+    + toString(): String
+  }
+  WeblogEntryManager ..> TagStat : returns
+
+  class WeblogTemplate {
+    - id: String
+    - action: ComponentType
+    - name: String
+    - description: String
+    - link: String
+    - lastModified: Date
+    - hidden: boolean
+    - navbar: boolean
+    - outputContentType: String
+    - weblog: Weblog
+    - templateRenditions: List<CustomTemplateRendition>
+    --
+    + WeblogTemplate()
+    + getId(): String
+    + setId(id: String): void
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getAction(): ComponentType
+    + setAction(action: ComponentType): void
+    + getName(): String
+    + setName(name: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getLink(): String
+    + setLink(link: String): void
+    + getLastModified(): Date
+    + setLastModified(date: Date): void
+    + isNavbar(): boolean
+    + setNavbar(navbar: boolean): void
+    + isHidden(): boolean
+    + setHidden(hidden: boolean): void
+    + getOutputContentType(): String
+    + setOutputContentType(type: String): void
+    + isRequired(): boolean
+    + isCustom(): boolean
+    + getTemplateRenditions(): List<CustomTemplateRendition>
+    + setTemplateRenditions(list: List<CustomTemplateRendition>): void
+    + getTemplateRendition(type: CustomTemplateRendition.RenditionType): CustomTemplateRendition
+    + addTemplateRendition(rendition: CustomTemplateRendition): void
+    + hasTemplateRendition(rendition: CustomTemplateRendition): boolean
+    + toString(): String
+    + equals(obj: Object): boolean
+    + hashCode(): int
+  }
+  interface ThemeTemplate {
+    --
+    + getAction(): ComponentType
+    + getLink(): String
+    + isHidden(): boolean
+    + isNavbar(): boolean
+  }
+  enum ComponentType {
+    WEBLOG
+    PERMALINK
+    SEARCH
+    TAGSINDEX
+    STYLESHEET
+    CUSTOM
+    --
+    - readableName: String
+    + ComponentType(readableName: String)
+    + getReadableName(): String
+  }
+
+  ThemeTemplate <|.. WeblogTemplate
+  ThemeTemplate ..> ComponentType : uses
+  Template <|-- ThemeTemplate : extends
+  ThemeTemplate <|.. WeblogTemplate
+
+  interface Template {
+    --
+    + getId(): String
+    + getTemplateLanguage(): String
+  }
+
+  class WeblogBookmark {
+    - id: String
+    - name: String
+    - description: String
+    - url: String
+    - feedUrl: String
+    - image: String
+    - priority: Integer
+    - folder: WeblogBookmarkFolder
+    --
+    + WeblogBookmark()
+    + WeblogBookmark(parent: WeblogBookmarkFolder, name: String, desc: String, url: String, feedUrl: String, image: String)
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getDescription(): String
+    + setDescription(description: String): void
+    + getUrl(): String
+    + setUrl(url: String): void
+    + getPriority(): Integer
+    + setPriority(priority: Integer): void
+    + calculatePriority(): void
+    + getImage(): String
+    + setImage(image: String): void
+    + getFeedUrl(): String
+    + setFeedUrl(feedUrl: String): void
+    + getFolder(): WeblogBookmarkFolder
+    + setFolder(folder: WeblogBookmarkFolder): void
+    + getWebsite(): Weblog
+    + compareTo(o: WeblogBookmark): int
+  }
+  class CustomTemplateRendition {
+    - id: String
+    - weblogTemplate: WeblogTemplate
+    - template: String
+    - type: RenditionType
+    - templateLanguage: TemplateLanguage
+    --
+    + CustomTemplateRendition()
+    + CustomTemplateRendition(template: WeblogTemplate, type: RenditionType)
+    + getId(): String
+    + setId(id: String): void
+    + getWeblogTemplate(): WeblogTemplate
+    + setWeblogTemplate(weblogTemplate: WeblogTemplate): void
+    + getTemplate(): String
+    + setTemplate(template: String): void
+    + getType(): RenditionType
+    + setType(type: RenditionType): void
+    + getTemplateLanguage(): TemplateLanguage
+    + setTemplateLanguage(templateLanguage: TemplateLanguage): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+  interface TemplateRendition {
+    --
+    + getTemplate(): String
+    + getTemplateLanguage(): TemplateLanguage
+    + getType(): RenditionType
+    + setTemplate(template: String): void
+    + setTemplateLanguage(templateLanguage: TemplateLanguage): void
+    + setType(type: RenditionType): void
+  }
+  enum RenditionType {
+    STANDARD
+    MOBILE
+  }
+  TemplateRendition --> RenditionType : uses
+
+  enum TemplateLanguage {
+      VELOCITY
+      --
+      - readableName: String
+      + getReadableName(): String
+  }
+  TemplateRendition --> TemplateLanguage : uses
+  TemplateRendition <|.. CustomTemplateRendition
+  WeblogBookmarkFolder "1" *-- "0..*" WeblogBookmark : contains  
+  WeblogTemplate "1" *-- "0..*" CustomTemplateRendition : has renditions
+  enum PubStatus {
+    DRAFT
+    PUBLISHED
+    PENDING
+    SCHEDULED
+  }
+
+  enum ApprovalStatus {
+    APPROVED
+    PENDING
+    DISAPPROVED
+    SPAM
+  }
+  class FileContent {
+    - resourceFile: File
+    - fileId: String
+    - weblog: Weblog
+    --
+    + FileContent(weblog: Weblog, fileId: String, file: File)
+    + getWeblog(): Weblog
+    + getName(): String
+    + getFileId(): String
+    + getLastModified(): long
+    + getLength(): long
+    + getInputStream(): InputStream
+  }
+  Weblog "1" <-- "*" FileContent : owns 
+  class MediaFileTag {
+    - id: String
+    - name: String
+    - mediaFile: MediaFile
+    --
+    + MediaFileTag()
+    + MediaFileTag(name: String, mediaFile: MediaFile)
+    + getId(): String
+    + setId(id: String): void
+    + getName(): String
+    + setName(name: String): void
+    + getMediaFile(): MediaFile
+    + setMediaFile(mediaFile: MediaFile): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+  MediaFile "1" <-- "*" MediaFileTag
+  enum MediaFileType {
+    AUDIO
+    VIDEO
+    IMAGE
+    OTHERS
+    --
+    + getContentTypePrefix(): String
+    + getId(): String
+    + getDesc(): String
+  }
+  class WeblogHitCount {
+    - id: String
+    - weblog: Weblog
+    - dailyHits: int
+    --
+    + WeblogHitCount()
+    + getId(): String
+    + setId(id: String): void
+    + getWeblog(): Weblog
+    + setWeblog(weblog: Weblog): void
+    + getDailyHits(): int
+    + setDailyHits(dailyHits: int): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  } 
+  class StatCount {
+    - subjectId: String
+    - subjectNameShort: String
+    - subjectNameLong: String
+    - typeKey: String
+    - count: long
+    - weblogHandle: String
+    --
+    + StatCount(subjectId: String, subjectNameShort: String,
+                subjectNameLong: String, typeKey: String, count: long)
+    + getTypeKey(): String
+    + setTypeKey(typeKey: String): void
+    + getCount(): long
+    + setCount(count: long): void
+    + getSubjectId(): String
+    + setSubjectId(subjectId: String): void
+    + getSubjectNameShort(): String
+    + setSubjectNameShort(subjectNameShort: String): void
+    + getSubjectNameLong(): String
+    + setSubjectNameLong(subjectNameLong: String): void
+    + getWeblogHandle(): String
+    + setWeblogHandle(weblogHandle: String): void
+    + toString(): String
+    + equals(other: Object): boolean
+    + hashCode(): int
+  }
+
+}
+package "org.apache.roller.weblogger.business" #FFDDDD {
+
+  interface Weblogger {
+    --
+    + getUserManager(): UserManager
+    + getBookmarkManager(): BookmarkManager
+    + getOAuthManager(): OAuthManager
+    + getWeblogManager(): WeblogManager
+    + getWeblogEntryManager(): WeblogEntryManager
+    + getThemeManager(): ThemeManager
+    + getMediaFileManager(): MediaFileManager
+    + getFileContentManager(): FileContentManager
+    + getUrlStrategy(): URLStrategy
+    + flush(): void
+    + initialize(): void
+    + release(): void
+    + shutdown(): void
+    + getVersion(): String
+    + getRevision(): String
+    + getBuildTime(): String
+    + getBuildUser(): String
+  }
+
+  interface WeblogManager {
+    --
+    + addWeblog(newWebsite: Weblog): void
+    + saveWeblog(data: Weblog): void
+    + removeWeblog(website: Weblog): void
+    + getWeblog(id: String): Weblog
+    + getWeblogByHandle(handle: String): Weblog
+    + getWeblogByHandle(handle: String, enabled: Boolean): Weblog
+    + getWeblogs(enabled: Boolean, active: Boolean, startDate: Date, endDate: Date, offset: int, length: int): List<Weblog>
+    + getUserWeblogs(user: User, enabledOnly: boolean): List<Weblog>
+    + getWeblogUsers(weblog: Weblog, enabledOnly: boolean): List<User>
+    + getMostCommentedWeblogs(startDate: Date, endDate: Date, offset: int, length: int): List<StatCount>
+    + getWeblogHandleLetterMap(): Map<String, Long>
+    + getWeblogsByLetter(letter: char, offset: int, length: int): List<Weblog>
+    + saveTemplate(data: WeblogTemplate): void
+    + removeTemplate(template: WeblogTemplate): void
+    + getTemplate(id: String): WeblogTemplate
+    + getTemplateByAction(weblog: Weblog, action: ComponentType): WeblogTemplate
+    + getTemplateByName(weblog: Weblog, name: String): WeblogTemplate
+    + getTemplateByLink(weblog: Weblog, link: String): WeblogTemplate
+    + saveTemplateRendition(templateCode: CustomTemplateRendition): void
+    + getTemplates(weblog: Weblog): List<WeblogTemplate>
+    + getWeblogCount(): long
+    + release(): void
+  }
+
+  interface WeblogEntryManager {
+    --
+    + saveWeblogEntry(entry: WeblogEntry): void
+    + removeWeblogEntry(entry: WeblogEntry): void
+    + getWeblogEntry(id: String): WeblogEntry
+    + getWeblogEntryByAnchor(weblog: Weblog, anchor: String): WeblogEntry
+    + getWeblogEntries(criteria: WeblogEntrySearchCriteria): List<WeblogEntry>
+    + getWeblogEntryObjectMap(criteria: WeblogEntrySearchCriteria): Map<Date, List<WeblogEntry>>
+    + getWeblogEntryStringMap(criteria: WeblogEntrySearchCriteria): Map<Date, String>
+    + getMostCommentedWeblogEntries(weblog: Weblog, startDate: Date, endDate: Date, offset: int,length: int): List<StatCount>
+    + getNextEntry(current: WeblogEntry, category: String, locale: String): WeblogEntry
+    + getPreviousEntry(current: WeblogEntry, category: String, locale: String): WeblogEntry
+    + saveWeblogCategory(category: WeblogCategory): void
+    + removeWeblogCategory(category: WeblogCategory): void
+    + getWeblogCategory(id: String): WeblogCategory
+    + getWeblogCategoryByName(weblog: Weblog, name: String): WeblogCategory
+    + getWeblogCategories(weblog: Weblog): List<WeblogCategory>
+    + saveComment(comment: WeblogEntryComment): void
+    + removeComment(comment: WeblogEntryComment): void
+    + getComment(id: String): WeblogEntryComment
+    + getComments(criteria: CommentSearchCriteria): List<WeblogEntryComment>
+    + getPopularTags(weblog: Weblog, startDate: Date, offset: int, limit: int): List<TagStat>
+    + getTags(weblog: Weblog, sortBy: String, startsWith: String, offset: int, limit: int): List<TagStat>
+    + getHitCount(id: String): WeblogHitCount
+    + getHitCountByWeblog(weblog: Weblog): WeblogHitCount
+    + incrementHitCount(weblog: Weblog, amount: int): void
+    + getCommentCount(): long
+    + getCommentCount(weblog: Weblog): long
+    + getEntryCount(): long
+    + getEntryCount(weblog: Weblog): long
+    + release(): void
+  }
+
+  interface MediaFileManager {
+    --
+    + initialize(): void
+    + release(): void
+    + createMediaFile(weblog: Weblog, mediaFile: MediaFile, errors: RollerMessages): void
+    + createThemeMediaFile(weblog: Weblog, mediaFile: MediaFile, errors: RollerMessages): void
+    + updateMediaFile(weblog: Weblog, mediaFile: MediaFile): void
+    + updateMediaFile(weblog: Weblog, mediaFile: MediaFile, content: InputStream): void
+    + getMediaFile(id: String): MediaFile
+    + getMediaFile(id: String, includeContent: boolean): MediaFile
+    + removeMediaFile(weblog: Weblog, mediaFile: MediaFile): void
+    + searchMediaFiles(weblog: Weblog, filter: MediaFileFilter): List<MediaFile>
+    + createDefaultMediaFileDirectory(weblog: Weblog): MediaFileDirectory
+    + createMediaFileDirectory(directory: MediaFileDirectory): void
+    + createMediaFileDirectory(weblog: Weblog, name: String): MediaFileDirectory
+    + getMediaFileDirectory(id: String): MediaFileDirectory
+    + getMediaFileDirectoryByName(weblog: Weblog, name: String): MediaFileDirectory
+    + getMediaFileByPath(weblog: Weblog, path: String): MediaFile
+    + getMediaFileByOriginalPath(weblog: Weblog, path: String): MediaFile
+    + getMediaFileDirectories(weblog: Weblog): List<MediaFileDirectory>
+    + getDefaultMediaFileDirectory(weblog: Weblog): MediaFileDirectory
+    + moveMediaFiles(files: Collection<MediaFile>, directory: MediaFileDirectory): void
+    + moveMediaFile(mediaFile: MediaFile, directory: MediaFileDirectory): void
+    + fetchRecentPublicMediaFiles(length: int): List<MediaFile>
+    + removeAllFiles(weblog: Weblog): void
+    + removeMediaFileDirectory(directory: MediaFileDirectory): void
+    + removeMediaFileTag(name: String, mediaFile: MediaFile): void
+  }
+
+  interface FileContentManager {
+    --
+    + saveFileContent(weblog: Weblog, path: String, contentStream: InputStream): void
+    + getFileContent(weblog: Weblog, path: String): InputStream
+    + delPropertiesManagereteFile(weblog: Weblog, path: String): void
+    + canSave(weblog: Weblog, path: String, contentType: String, size: long): boolean
+    + overQuota(weblog: Weblog): boolean
+    + delete(weblog: Weblog): void
+    + getFileContent(weblog: Weblog, fileId: String): FileContent
+    + saveFileContent(weblog: Weblog, fileId: String, content: InputStream): void
+    + deleteFile(weblog: Weblog, fileId: String): void
+    + deleteAllFiles(weblog: Weblog): void
+    + overQuota(weblog: Weblog): boolean
+    + canSave(weblog: Weblog, fileName: String, contentType: String, size: long, messages: RollerMessages): boolean
+    + release(): void
+  }
+
+  interface ThemeManager {
+    --
+    + initialize(): void
+    + getTheme(id: String): SharedTheme
+    + getTheme(weblog: Weblog): WeblogTheme
+    + getEnabledThemesList(): List<SharedTheme>
+    + importTheme(weblog: Weblog, theme: SharedTheme, skipStylesheet: boolean): void
+    + reLoadThemeFromDisk(themeName: String): boolean
+  }
+
+  interface BookmarkManager {
+    --
+    + saveFolder(folder: WeblogBookmarkFolder): void
+    + removeFolder(folder: WeblogBookmarkFolder): void
+    + getFolder(id: String): WeblogBookmarkFolder
+    + getAllFolders(weblog: Weblog): List<WeblogBookmarkFolder>
+    + getDefaultFolder(weblog: Weblog): WeblogBookmarkFolder
+    + getFolder(weblog: Weblog, name: String): WeblogBookmarkFolder
+
+    + saveBookmark(bookmark: WeblogBookmark): void
+    + removeBookmark(bookmark: WeblogBookmark): void
+    + getBookmark(id: String): WeblogBookmark
+    + getBookmarks(folder: WeblogBookmarkFolder): List<WeblogBookmark>
+
+    + importBookmarks(weblog: Weblog, folder: String, opml: String): void
+    + release(): void
+  }
+
+  interface URLStrategy {
+    --
+    + getPreviewURLStrategy(previewTheme: String): URLStrategy
+
+    + getLoginURL(absolute: boolean): String
+    + getLogoutURL(absolute: boolean): String
+    + getRegisterURL(absolute: boolean): String
+
+    + getActionURL(action: String, namespace: String, weblogHandle: String, parameters: Map<String, String>, absolute: boolean): String
+
+    + getEntryAddURL(weblogHandle: String, absolute: boolean): String
+    + getEntryEditURL(weblogHandle: String, entryId: String, absolute: boolean): String
+    + getWeblogConfigURL(weblogHandle: String, absolute: boolean): String
+
+    + getOpenSearchSiteURL(): String
+    + getOpenSearchWeblogURL(weblogHandle: String): String
+    + getWeblogSearchFeedURLTemplate(weblog: Weblog): String
+    + getWeblogSearchPageURLTemplate(weblog: Weblog): String
+
+    + getXmlrpcURL(absolute: boolean): String
+    + getAtomProtocolURL(absolute: boolean): String
+
+    + getWeblogURL(weblog: Weblog, locale: String, absolute: boolean): String
+    + getWeblogEntryURL(weblog: Weblog, locale: String, entryAnchor: String, absolute: boolean): String
+
+    + getWeblogCommentsURL(weblog: Weblog, locale: String, entryAnchor: String, absolute: boolean): String
+
+    + getWeblogCommentURL(weblog: Weblog, locale: String, entryAnchor: String, timeStamp: String, absolute: boolean): String
+
+    + getMediaFileURL(weblog: Weblog, fileAnchor: String, absolute: boolean): String
+    + getMediaFileThumbnailURL(weblog: Weblog, fileAnchor: String, absolute: boolean): String
+
+    + getWeblogCollectionURL(weblog: Weblog, locale: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+
+    + getWeblogPageURL(weblog: Weblog, locale: String, pageLink: String, entryAnchor: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+
+    + getWeblogFeedURL(weblog: Weblog, locale: String, type: String, format: String, category: String, term: String, tags: List<String>, excerpts: boolean, absolute: boolean): String
+
+    + getWeblogSearchURL(weblog: Weblog, locale: String, query: String, category: String, pageNum: int, absolute: boolean): String
+
+    + getWeblogResourceURL(weblog: Weblog, filePath: String, absolute: boolean): String
+
+    + getWeblogRsdURL(weblog: Weblog, absolute: boolean): String
+    + getWeblogTagsJsonURL(weblog: Weblog, absolute: boolean, pageNum: int): String
+
+    + getOAuthRequestTokenURL(): String
+    + getOAuthAuthorizationURL(): String
+    + getOAuthAccessTokenURL(): String
+  }
+
+  abstract class AbstractURLStrategy {
+    --
+    {static} URL_BUFFER_SIZE: int
+
+    --
+    + getLoginURL(absolute: boolean): String
+    + getLogoutURL(absolute: boolean): String
+    + getRegisterURL(absolute: boolean): String
+    + getActionURL(action: String, namespace: String, weblogHandle: String, parameters: Map<String, String>, absolute: boolean): String
+    + getEntryAddURL(weblogHandle: String, absolute: boolean): String
+    + getEntryEditURL(weblogHandle: String, entryId: String, absolute: boolean): String
+    + getWeblogConfigURL(weblogHandle: String, absolute: boolean): String
+    + getXmlrpcURL(absolute: boolean): String
+    + getAtomProtocolURL(absolute: boolean): String
+  }
+
+  class MultiWeblogURLStrategy {
+    --
+    + getPreviewURLStrategy(previewTheme: String): URLStrategy
+    + getWeblogURL(weblog: Weblog, locale: String, absolute: boolean): String
+    + getWeblogEntryURL(weblog: Weblog, locale: String, entryAnchor: String, absolute: boolean): String
+    + getMediaFileURL(weblog: Weblog, fileAnchor: String, absolute: boolean): String
+    + getMediaFileThumbnailURL(weblog: Weblog, fileAnchor: String, absolute: boolean): String
+    + getWeblogCommentsURL(weblog: Weblog, locale: String, entryAnchor: String, absolute: boolean): String
+    + getWeblogCommentURL(weblog: Weblog, locale: String, entryAnchor: String, timeStamp: String, absolute: boolean): String
+    + getWeblogCollectionURL(weblog: Weblog, locale: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+    + getWeblogPageURL(weblog: Weblog, locale: String, pageLink: String, entryAnchor: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+    + getWeblogFeedURL(weblog: Weblog, locale: String, type: String, format: String, category: String, term: String, tags: List<String>, excerpts: boolean, absolute: boolean): String
+    + getWeblogSearchURL(weblog: Weblog, locale: String, query: String, category: String, pageNum: int, absolute: boolean): String
+    + getWeblogResourceURL(weblog: Weblog, filePath: String, absolute: boolean): String
+    + getWeblogRsdURL(weblog: Weblog, absolute: boolean): String
+    + getWeblogTagsJsonURL(weblog: Weblog, absolute: boolean, pageNum: int): String
+    + getWeblogSearchFeedURLTemplate(weblog: Weblog): String
+    + getWeblogSearchPageURLTemplate(weblog: Weblog): String
+    + getOpenSearchSiteURL(): String
+    + getOpenSearchWeblogURL(weblogHandle: String): String
+    + getOAuthRequestTokenURL(): String
+    + getOAuthAuthorizationURL(): String
+    + getOAuthAccessTokenURL(): String
+  }
+
+  class PreviewURLStrategy {
+    --
+    - previewTheme: String
+    {static} PREVIEW_URL_SEGMENT: String
+    --
+    + getWeblogURL(weblog: Weblog, locale: String, absolute: boolean): String
+    + getWeblogEntryURL(weblog: Weblog, locale: String, previewAnchor: String, absolute: boolean): String
+    + getWeblogCollectionURL(weblog: Weblog, locale: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+    + getWeblogPageURL(weblog: Weblog, locale: String, pageLink: String, entryAnchor: String, category: String, dateString: String, tags: List<String>, pageNum: int, absolute: boolean): String
+    + getWeblogResourceURL(weblog: Weblog, filePath: String, absolute: boolean): String
+  }
+}
+
+package "org.apache.roller.weblogger.business.jpa" #FFEEEE {
+
+  class JPAWebloggerImpl {
+    - userManager: UserManager
+    - weblogManager: WeblogManager
+    - weblogEntryManager: WeblogEntryManager
+    - mediaFileManager: MediaFileManager
+    - fileContentManager: FileContentManager
+    - themeManager: ThemeManager
+    - urlStrategy: URLStrategy
+    --
+    + getUserManager(): UserManager
+    + getWeblogManager(): WeblogManager
+    + getWeblogEntryManager(): WeblogEntryManager
+    + getMediaFileManager(): MediaFileManager
+    + getFileContentManager(): FileContentManager
+    + getThemeManager(): ThemeManager
+    + getURLStrategy(): URLStrategy
+    + flush(): void
+  }
+
+  class JPAWeblogManagerImpl {
+    - strategy: JPAPersistenceStrategy
+    --
+    + addWeblog(weblog: Weblog): void
+    + saveWeblog(weblog: Weblog): void
+    + getWeblog(id: String): Weblog
+    + getWeblogByHandle(handle: String): Weblog
+  }
+
+  class JPAWeblogEntryManagerImpl {
+    - strategy: JPAPersistenceStrategy
+    --
+    + saveWeblogEntry(entry: WeblogEntry): void
+    + removeWeblogEntry(entry: WeblogEntry): void
+    + getWeblogEntry(id: String): WeblogEntry
+    + getWeblogEntries(criteria: WeblogEntrySearchCriteria): List<WeblogEntry>
+  }
+
+  class JPAPersistenceStrategy {
+    --
+    + store(obj: Object): void
+    + remove(obj: Object): void
+    + load(clazz: Class, id: String): Object
+    + getNamedQuery(name: String, clazz: Class): TypedQuery
+    + flush(): void
+  }
+
+  class JPAMediaFileManagerImpl {
+    - strategy: JPAPersistenceStrategy
+    --
+    + createMediaFile(weblog: Weblog, mediaFile: MediaFile, contentStream: InputStream): void
+    + updateMediaFile(weblog: Weblog, mediaFile: MediaFile): void
+    + getMediaFile(id: String): MediaFile
+    + searchMediaFiles(weblog: Weblog, filter: MediaFileFilter): List<MediaFile>
+    + deleteMediaFile(weblog: Weblog, mediaFile: MediaFile): void
+  }
+
+  class FileContentManagerImpl {
+    - storageDir: String
+    --
+    + saveFileContent(weblog: Weblog, path: String, contentStream: InputStream): void
+    + getFileContent(weblog: Weblog, path: String): InputStream
+    + deleteFile(weblog: Weblog, path: String): void
+    + canSave(weblog: Weblog, path: String, contentType: String, size: long): boolean
+  }
+
+  class ThemeManagerImpl {
+    - themeMap: Map<String, SharedTheme>
+    --
+    + getTheme(themeId: String): SharedTheme
+    + getEnabledThemesList(): List<SharedTheme>
+    + importTheme(weblog: Weblog, themeId: String): void
+    + getWeblogTheme(weblog: Weblog): Theme
+  }
+
+  class MultiWeblogURLStrategy {
+    --
+    + getWeblogURL(weblog: Weblog, locale: String, absoluteURL: boolean): String
+    + getWeblogEntryURL(weblog: Weblog, locale: String, entry: WeblogEntry, absoluteURL: boolean): String
+    + getWeblogPageURL(weblog: Weblog, locale: String, pageLink: String, entryAnchor: String, category: String, tags: List<String>, dateString: String, pageNum: int, absoluteURL: boolean): String
+  }
+}
+package "org.apache.roller.weblogger.ui.rendering" #DDFFDD {
+
+  class RendererManager {
+    - rendererFactories: Map<String, RendererFactory>
+    --
+    + render(template: Template, model: Map<String, Object>): String
+    + render(template: Template, model: Map<String, Object>, output: OutputStream): void
+    + getRenderer(template: Template): Renderer
+  }
+
+  interface Renderer {
+    --
+    + render(template: Template, output: OutputStream): void
+  }
+
+  interface RendererFactory {
+    --
+    + getRenderer(template: Template, deviceType: DeviceType): Renderer
+  }
+
+  class ModelLoader {
+    --
+    + loadModels(request: WeblogPageRequest, model: Map, preview: boolean): void
+    + loadSearchModels(query: String, weblog: Weblog, urlStrategy: URLStrategy, model: Map, hits: int): void
+  }
+
+  class VelocityRenderer {
+    - velocityEngine: VelocityEngine
+    - context: Map<String, Object>
+    --
+    + render(template: Template, output: OutputStream): void
+  }
+
+  class VelocityRendererFactory {
+    - velocityEngine: VelocityEngine
+    --
+    + getRenderer(template: Template, deviceType: DeviceType): Renderer
+  }
+  interface CommentAuthenticator {
+
+    + getHtml(request: HttpServletRequest) : String
+    + authenticate(request: HttpServletRequest) : boolean
+  }
+  CommentAuthenticator ..> HttpServletRequest
+
+  class CommentValidationManager {
+  - static Log log
+  - List<CommentValidator> validators
+  + CommentValidationManager()
+  + addCommentValidator(val: CommentValidator) : void
+  + validateComment(comment: WeblogEntryComment, messages: RollerMessages) : int
+  }
+
+  CommentValidationManager --> CommentValidator : uses
+  CommentValidationManager --> WeblogEntryComment
+  CommentValidationManager --> RollerMessages
+
+  interface CommentValidator {
+
+    + getName() : String
+    + validate(comment: WeblogEntryComment, messages: RollerMessages) : int
+  }
+  CommentValidator ..> WeblogEntryComment
+
+  class RollerMessages {
+  - List<RollerMessage> mErrors
+  - List<RollerMessage> mMessages
+  + RollerMessages()
+  --
+  + addError(key: String) : void
+  + addError(key: String, arg: String) : void
+  + addError(key: String, args: String[]) : void
+  + addMessage(key: String) : void
+  + addMessage(key: String, arg: String) : void
+  + addMessage(key: String, args: String[]) : void
+  + getErrors() : Iterator<RollerMessage>
+  + getMessages() : Iterator<RollerMessage>
+  + getErrorCount() : int
+  + getMessageCount() : int
+  + toString() : String
+  }
+
+}
+
+package "org.apache.roller.weblogger.ui.rendering.servlets" #DDFFFF {
+
+  class PageServlet extends HttpServlet {
+    - weblogPageCache: WeblogPageCache
+    - siteWideCache: SiteWideCache
+    --
+    + doGet(request: HttpServletRequest, response: HttpServletResponse): void
+    - handleRequest(request: HttpServletRequest, response: HttpServletResponse): void
+    - generateKey(pageRequest: WeblogPageRequest, user: User): String
+    - respondIfNotModified(request: HttpServletRequest, response: HttpServletResponse, lastModified: long): boolean
+  }
+
+  class MediaResourceServlet extends HttpServlet {
+    --
+    + doGet(request: HttpServletRequest, response: HttpServletResponse): void
+    - serveMediaFile(id: String, response: HttpServletResponse): void
+  }
+
+  class FeedServlet {
+    - log : Log {static}
+    - weblogFeedCache : WeblogFeedCache
+    - siteWideCache : SiteWideCache
+
+    + init(servletConfig : ServletConfig) : void
+    + doGet(request : HttpServletRequest, response : HttpServletResponse) : void
+  }
+  FeedServlet --> WeblogFeedCache : uses
+  FeedServlet --> SiteWideCache : uses
+  FeedServlet --> HttpServletRequest
+  FeedServlet --> HttpServletResponse
+
+  class SearchServlet extends HttpServlet {
+    + serialVersionUID : long {static}
+    - log : Log {static}
+    - themeReload : Boolean
+    -- 
+    + init(servletConfig : ServletConfig) : void
+    + doGet(request : HttpServletRequest, response : HttpServletResponse) : void
+  }
+  SearchServlet --> HttpServletRequest
+  SearchServlet --> HttpServletResponse
+
+  class CommentServlet extends HttpServlet {
+  - static Log log
+  - CommentAuthenticator authenticator
+  - CommentValidationManager commentValidationManager
+  - GenericThrottle commentThrottle
+  --
+  + init(ServletConfig servletConfig) : void
+  + doGet(HttpServletRequest request, HttpServletResponse response) : void
+  + doPost(HttpServletRequest request, HttpServletResponse response) : void
+  }
+  CommentServlet --> HttpServletRequest
+  CommentServlet --> HttpServletResponse
+  
+  CommentServlet --> CommentAuthenticator : uses
+  CommentServlet --> CommentValidationManager : manages
+}
+
+package "org.apache.roller.weblogger.ui.rendering.util" #FFFFDD {
+
+  abstract class WeblogRequest {
+    # weblog: Weblog
+    # weblogHandle: String
+    # authenticUser: User
+    # locale: String
+    --
+    + {abstract} isValidDestination(): boolean
+    + getWeblog(): Weblog
+    + getAuthenticUser(): User
+  }
+
+  class WeblogFeedRequest extends WeblogRequest {
+
+    - log : Log {static}
+    - FEED_SERVLET : String {static}
+    - type : String
+    - format : String
+    - weblogCategoryName : String
+    - tags : List<String>
+    - page : int
+    - excerpts : boolean
+    - term : String
+    - weblogCategory : WeblogCategory
+    + WeblogFeedRequest()
+    + WeblogFeedRequest(request : HttpServletRequest) throws InvalidRequestException
+    -- 
+    + getType() : String
+    + setType(type : String) : void
+    + getFormat() : String
+    + setFormat(format : String) : void
+    + getWeblogCategoryName() : String
+    + setWeblogCategoryName(name : String) : void
+    + getTags() : List<String>
+    + setTags(tags : List<String>) : void
+    + isExcerpts() : boolean
+    + setExcerpts(excerpts : boolean) : void
+    + getWeblogCategory() : WeblogCategory
+    + setWeblogCategory(category : WeblogCategory) : void
+    + getPage() : int
+    + setPage(page : int) : void
+    + getTerm() : String
+    + setTerm(term : String) : void
+  }
+  WeblogFeedRequest --> WeblogCategory : references
+  WeblogFeedRequest --> HttpServletRequest
+  
+  class WeblogPageRequest extends WeblogRequest {
+
+    - log : Log {static}
+    - PAGE_SERVLET : String {static}
+    - context : String
+    - weblogAnchor : String
+    - weblogPageName : String
+    - weblogCategoryName : String
+    - weblogDate : String
+    - tags : List<String>
+    - pageNum : int
+    - customParams : Map<String, String[]>
+    - weblogEntry : WeblogEntry
+    - weblogPage : ThemeTemplate
+    - weblogCategory : WeblogCategory
+    - websitePageHit : boolean
+    - otherPageHit : boolean
+    + WeblogPageRequest()
+    + WeblogPageRequest(request : HttpServletRequest) throws InvalidRequestException
+
+    -- 
+    + getContext() : String
+    + setContext(context : String) : void
+    + getWeblogAnchor() : String
+    + setWeblogAnchor(anchor : String) : void
+    + getWeblogPageName() : String
+    + setWeblogPageName(pageName : String) : void
+    + getWeblogCategoryName() : String
+    + setWeblogCategoryName(categoryName : String) : void
+    + getWeblogDate() : String
+    + setWeblogDate(date : String) : void
+    + getPageNum() : int
+    + setPageNum(pageNum : int) : void
+    + getCustomParams() : Map<String, String[]>
+    + setCustomParams(params : Map<String, String[]>) : void
+    + getTags() : List<String>
+    + setTags(tags : List<String>) : void
+    + getWeblogEntry() : WeblogEntry
+    + setWeblogEntry(entry : WeblogEntry) : void
+    + getWeblogPage() : ThemeTemplate
+    + setWeblogPage(page : WeblogTemplate) : void
+    + getWeblogCategory() : WeblogCategory
+    + setWeblogCategory(category : WeblogCategory) : void
+    + isWebsitePageHit() : boolean
+    + setWebsitePageHit(flag : boolean) : void
+    + isOtherPageHit() : boolean
+    + setOtherPageHit(flag : boolean) : void
+    - isValidDestination(servlet : String) : boolean
+    - isValidDateString(date : String) : boolean
+  }
+  WeblogPageRequest --> WeblogEntry : references
+  WeblogPageRequest --> WeblogCategory : references
+  WeblogPageRequest --> ThemeTemplate : references
+  WeblogPageRequest --> WeblogTemplate : uses
+  WeblogFeedRequest --> HttpServletRequest
+
+  class WeblogPageCache {
+    - cache: Map<String, CachedContent>
+    --
+    + get(key: String, lastModified: long): CachedContent
+    + put(key: String, content: CachedContent): void
+    + remove(key: String): void
+    + clear(): void
+  }
+  interface CacheHandler {
+        + invalidate(entry: WeblogEntry) : void
+        + invalidate(website: Weblog) : void
+        + invalidate(bookmark: WeblogBookmark) : void
+        + invalidate(folder: WeblogBookmarkFolder) : void
+        + invalidate(comment: WeblogEntryComment) : void
+        + invalidate(user: User) : void
+        + invalidate(category: WeblogCategory) : void
+        + invalidate(template: WeblogTemplate) : void
+  
+  }
+  CacheHandler ..> WeblogEntry : uses
+  CacheHandler ..> Weblog : uses
+  CacheHandler ..> WeblogBookmark : uses
+  CacheHandler ..> WeblogBookmarkFolder : uses
+  CacheHandler ..> WeblogEntryComment : uses
+  CacheHandler ..> User : uses
+  CacheHandler ..> WeblogCategory : uses
+  CacheHandler ..> WeblogTemplate : uses
+  
+  class SiteWideCache implements CacheHandler {
+    - log : Log {static}
+    + CACHE_ID : String {static}
+    - singletonInstance : SiteWideCache {static}
+    - cacheEnabled : boolean
+    - contentCache : Cache
+    - lastUpdateTime : ExpiringCacheEntry
+    - SiteWideCache()
+
+    -- 
+    + getInstance() : SiteWideCache
+    + get(key : String) : Object
+    + put(key : String, value : Object) : void
+    + remove(key : String) : void
+    + clear() : void
+    + getLastModified() : Date
+    + generateKey(pageRequest : WeblogPageRequest) : String
+    + generateKey(feedRequest : WeblogFeedRequest) : String
+    + invalidate(entry : WeblogEntry) : void
+    + invalidate(website : Weblog) : void
+    + invalidate(bookmark : WeblogBookmark) : void
+    + invalidate(folder : WeblogBookmarkFolder) : void
+    + invalidate(comment : WeblogEntryComment) : void
+    + invalidate(user : User) : void
+    + invalidate(category : WeblogCategory) : void
+    + invalidate(template : WeblogTemplate) : void
+    - paramsToString(map : Map<String, String[]>) : String
+  }
+  SiteWideCache ..> WeblogEntry
+  SiteWideCache ..> Weblog
+  SiteWideCache ..> WeblogBookmark
+  SiteWideCache ..> WeblogBookmarkFolder
+  SiteWideCache ..> WeblogEntryComment
+  SiteWideCache ..> WeblogCategory
+  SiteWideCache ..> WeblogTemplate
+  SiteWideCache ..> User
+  SiteWideCache ..> WeblogPageRequest : generates key
+  SiteWideCache ..> WeblogFeedRequest : generates key
+
+  class WeblogFeedCache {
+  - {static} Log log
+  + {static} final String CACHE_ID
+  - {static} final WeblogFeedCache singletonInstance
+  - boolean cacheEnabled
+  - Cache contentCache
+  - WeblogFeedCache()
+  --
+  + {static} getInstance() : WeblogFeedCache
+  + get(key : String, lastModified : long) : Object
+  + put(key : String, value : Object) : void
+  + remove(key : String) : void
+  + clear() : void
+  + generateKey(feedRequest : WeblogFeedRequest) : String
+  }
+  WeblogFeedCache --> WeblogFeedRequest : depends on
+
+  interface RequestMapper {
+
+    + handleRequest(req: HttpServletRequest, res: HttpServletResponse) : boolean
+  }
+
+  RequestMapper ..> HttpServletRequest
+  RequestMapper ..> HttpServletResponse
+  RequestMapper ..> ServletException
+  RequestMapper ..> IOException
+
+  class WeblogRequestMapper {
+  - static Log log
+  - static String PAGE_SERVLET
+  - static String FEED_SERVLET
+  - static String RESOURCE_SERVLET
+  - static String MEDIA_SERVLET
+  - static String SEARCH_SERVLET
+  - static String RSD_SERVLET
+  - static String COMMENT_SERVLET
+  - static String TRACKBACK_SERVLET
+  - Set<String> restricted
+  + WeblogRequestMapper()
+
+  --
+  + handleRequest(request: HttpServletRequest, response: HttpServletResponse) : boolean
+  - calculateForwardUrl(request: HttpServletRequest, handle: String, locale: String, context: String, data: String) : String
+  - isWeblog(potentialHandle: String) : boolean
+  - isLocale(potentialLocale: String) : boolean
+  }
+  WeblogRequestMapper ..|> RequestMapper
+
+  class WeblogCommentRequest  {
+  - static Log log
+  - static String COMMENT_SERVLET
+  - String name
+  - String email
+  - String url
+  - String content
+  - boolean notify
+  - String weblogAnchor
+  - WeblogEntry weblogEntry
+  + WeblogCommentRequest()
+  + WeblogCommentRequest(request: HttpServletRequest)
+
+  --
+  + getName() : String
+  + setName(name: String) : void
+  + getEmail() : String
+  + setEmail(email: String) : void
+  + getUrl() : String
+  + setUrl(url: String) : void
+  + getContent() : String
+  + setContent(content: String) : void
+  + isNotify() : boolean
+  + setNotify(notify: boolean) : void
+  + getWeblogAnchor() : String
+  + setWeblogAnchor(anchor: String) : void
+  + getWeblogEntry() : WeblogEntry
+  + setWeblogEntry(entry: WeblogEntry) : void
+  }
+  WeblogCommentRequest --|> WeblogRequest
+  WeblogCommentRequest --> WeblogEntry
+  WeblogCommentRequest --> HttpServletRequest
+  
+}
+MultiWeblogURLStrategy <|-- PreviewURLStrategy : extends
+
+Weblogger <|.. JPAWebloggerImpl : implements
+WeblogManager <|.. JPAWeblogManagerImpl : implements
+WeblogEntryManager <|.. JPAWeblogEntryManagerImpl : implements
+MediaFileManager <|.. JPAMediaFileManagerImpl : implements
+FileContentManager <|.. FileContentManagerImpl : implements
+ThemeManager <|.. ThemeManagerImpl : implements
+URLStrategy <|.. MultiWeblogURLStrategy : implements
+Renderer <|.. VelocityRenderer : implements
+RendererFactory <|.. VelocityRendererFactory : implements
+URLStrategy <|.. AbstractURLStrategy : implements
+AbstractURLStrategy ..> URLUtilities : builds URLs
+
+AbstractURLStrategy <|-- MultiWeblogURLStrategy : extends
+MultiWeblogURLStrategy ..> Weblog : builds URLs for
+MultiWeblogURLStrategy ..> URLUtilities : encodes URLs
+
+
+Weblog "1" *-- "0..*" WeblogCategory : owns
+Weblog "1" *-- "0..*" WeblogEntry : owns
+Weblog "1" *-- "0..*" WeblogBookmarkFolder : owns
+
+Weblog "1" *-- "0..*" WeblogTemplate : owns
+Weblog "1" *-- "0..*" WeblogBookmarkFolder : owns
+User "1" o-- "0..*" Weblog : has permissions for
+
+WeblogBookmarkFolder "1" *-- "0..*" WeblogBookmark : contains
+WeblogCategory "0..*" --> "1" Weblog : belongs to
+
+BookmarkManager ..> Weblog : manages bookmarks for
+BookmarkManager ..> WeblogBookmarkFolder : manages
+BookmarkManager ..> WeblogBookmark : manages
+User "1" -- "0..*" WeblogEntryTag
+
+JPAWeblogManagerImpl ..> JPAPersistenceStrategy : uses
+JPAWeblogEntryManagerImpl ..> JPAPersistenceStrategy : uses
+JPAMediaFileManagerImpl ..> JPAPersistenceStrategy : uses
+MediaFileManager ..> MediaFileFilter : uses
+JPAWebloggerImpl ..> JPAWeblogManagerImpl : manages
+JPAWebloggerImpl ..> JPAWeblogEntryManagerImpl : manages
+JPAWebloggerImpl ..> JPAMediaFileManagerImpl : manages
+JPAWebloggerImpl ..> FileContentManagerImpl : manages
+JPAWebloggerImpl ..> ThemeManagerImpl : manages
+JPAWebloggerImpl ..> MultiWeblogURLStrategy : manages
+
+UserManager ..> User : manages CRUD
+UserManager ..> RollerPermission : checks
+WeblogManager ..> Weblog : manages CRUD
+WeblogEntryManager ..> WeblogEntry : manages CRUD
+WeblogEntryManager ..> WeblogCategory : manages
+WeblogEntryManager ..> WeblogEntryComment : manages
+MediaFileManager ..> MediaFile : manages
+FileContentManager ..> Weblog : stores files for
+MediaFileFilter --> SizeFilterType : uses
+MediaFileFilter --> MediaFileOrder : uses
+
+PageServlet ..> WeblogPageRequest : parses
+PageServlet ..> WeblogPageCache : uses
+PageServlet ..> SiteWideCache : uses
+PageServlet ..> RendererManager : uses
+PageServlet ..> ModelLoader : uses
+MediaResourceServlet ..> MediaFileManager : uses
+
+RendererManager ..> RendererFactory : uses
+RendererManager ..> Renderer : creates
+VelocityRendererFactory ..> VelocityRenderer : creates
+ModelLoader ..> Weblogger : uses
+WeblogPageRequest ..> Weblog : resolves
+WeblogPageRequest ..> WeblogEntryManager : validates
+
+Weblogger --> UserManager
+Weblogger --> WeblogManager
+Weblogger --> WeblogEntryManager
+Weblogger --> MediaFileManager
+Weblogger --> FileContentManager
+Weblogger --> URLStrategy
+Weblogger --> ThemeManager
+WeblogManager ..> Weblog : manages
+WeblogManager ..> User : queries ownership
+WeblogManager ..> WeblogTemplate : manages templates
+WeblogManager ..> CustomTemplateRendition : stores
+WeblogManager ..> StatCount : reports stats
+WeblogManager ..> ComponentType : selects template action
+
+Weblogger --> WeblogEntryManager : provides
+WeblogEntryManager ..> Weblog : manages entries for
+WeblogEntryManager ..> WeblogEntry : manages
+WeblogEntryManager ..> WeblogCategory : manages
+WeblogEntryManager ..> WeblogEntryComment : manages
+WeblogEntryManager ..> WeblogHitCount : tracks
+WeblogEntryManager ..> StatCount : reports stats
+WeblogEntryManager ..> WeblogEntrySearchCriteria : queries with
+WeblogEntryManager ..> CommentSearchCriteria : filters comments
+Weblogger --> WeblogManager : provides
+
+Weblogger --> MediaFileManager : provides
+MediaFileManager ..> Weblog : manages media for
+MediaFileManager ..> MediaFileDirectory : organizes
+MediaFileManager ..> MediaFileFilter : filters
+MediaFileManager ..> RollerMessages : reports validation errors
+MediaFileManager ..> Weblog : removes all files for
+
+Weblogger --> FileContentManager : provides
+FileContentManager ..> Weblog : stores files for
+FileContentManager ..> FileContent : manages
+FileContentManager ..> RollerMessages : reports validation errors
+PreviewURLStrategy ..> Weblog : builds preview URLs
+PreviewURLStrategy ..> URLUtilities : encodes preview URLs
+PreviewURLStrategy ..> WeblogTheme : checks theme type
+
+URLStrategy <|.. AbstractURLStrategy
+
+@enduml

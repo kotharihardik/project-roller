@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- filepath: app/src/main/resources/org/apache/roller/weblogger/pojos/BugReport.orm.xml -->
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+                                     http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+                 version="2.0">
+    
+    <entity class="org.apache.roller.weblogger.pojos.BugReport" access="FIELD">
+        <table name="bug_report">
+            <index name="idx_bugreport_creator" column-list="creatorid"/>
+            <index name="idx_bugreport_status" column-list="status"/>
+            <index name="idx_bugreport_created" column-list="createdat"/>
+        </table>
+        
+        <attributes>
+            <!-- Primary Key -->
+            <id name="id">
+                <column name="id" length="48" nullable="false"/>
+            </id>
+            
+            <!-- Version for Optimistic Locking -->
+            <version name="optLock">
+                <column name="optlock"/>
+            </version>
+            
+            <!-- Basic Fields -->
+            <basic name="title">
+                <column name="title" length="255" nullable="false"/>
+            </basic>
+            
+            <basic name="description">
+                <column name="description" nullable="false"/>
+                <lob/>
+            </basic>
+            
+            <basic name="category">
+                <column name="category" length="50" nullable="false"/>
+            </basic>
+            
+            <basic name="severity">
+                <column name="severity" length="20" nullable="false"/>
+            </basic>
+            
+            <basic name="status">
+                <column name="status" length="20" nullable="false"/>
+            </basic>
+            
+            <basic name="pageUrl">
+                <column name="pageurl" length="2048"/>
+            </basic>
+            
+            <basic name="browserInfo">
+                <column name="browserinfo" length="512"/>
+            </basic>
+            
+            <basic name="stepsToReproduce">
+                <column name="stepstoreproduce"/>
+                <lob/>
+            </basic>
+            
+            <basic name="screenshotUrl">
+                <column name="screenshoturl" length="2048"/>
+            </basic>
+            
+            <basic name="adminNotes">
+                <column name="adminnotes"/>
+                <lob/>
+            </basic>
+            
+            <!-- Temporal Fields -->
+            <basic name="createdAt">
+                <column name="createdat" nullable="false"/>
+                <temporal>TIMESTAMP</temporal>
+            </basic>
+            
+            <basic name="updatedAt">
+                <column name="updatedat" nullable="false"/>
+                <temporal>TIMESTAMP</temporal>
+            </basic>
+            
+            <basic name="resolvedAt">
+                <column name="resolvedat"/>
+                <temporal>TIMESTAMP</temporal>
+            </basic>
+            
+            <!-- Relationships -->
+            <many-to-one name="creator" target-entity="org.apache.roller.weblogger.pojos.User">
+                <join-column name="creatorid" referenced-column-name="id" nullable="false"/>
+            </many-to-one>
+            
+            <many-to-one name="lastModifiedBy" target-entity="org.apache.roller.weblogger.pojos.User">
+                <join-column name="lastmodifiedbyid" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+        
+        <!-- Named Queries -->
+        <named-query name="BugReport.getById">
+            <query>
+                SELECT b FROM BugReport b WHERE b.id = ?1
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.getByUser">
+            <query>
+                SELECT b FROM BugReport b 
+                WHERE b.creator = ?1 AND b.status &lt;&gt; 'DELETED' 
+                ORDER BY b.createdAt DESC
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.getByStatus">
+            <query>
+                SELECT b FROM BugReport b 
+                WHERE b.status = ?1 
+                ORDER BY b.createdAt DESC
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.getAll">
+            <query>
+                SELECT b FROM BugReport b 
+                WHERE b.status &lt;&gt; 'DELETED' 
+                ORDER BY b.createdAt DESC
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.getByStatusAndSeverity">
+            <query>
+                SELECT b FROM BugReport b 
+                WHERE b.status = ?1 AND b.severity = ?2 
+                ORDER BY b.createdAt DESC
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.getBySeverity">
+            <query>
+                SELECT b FROM BugReport b 
+                WHERE b.severity = ?1 AND b.status &lt;&gt; 'DELETED' 
+                ORDER BY b.createdAt DESC
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.countByUser">
+            <query>
+                SELECT COUNT(b) FROM BugReport b 
+                WHERE b.creator = ?1 AND b.status &lt;&gt; 'DELETED'
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.countByStatus">
+            <query>
+                SELECT COUNT(b) FROM BugReport b WHERE b.status = ?1
+            </query>
+        </named-query>
+        
+        <named-query name="BugReport.countAll">
+            <query>
+                SELECT COUNT(b) FROM BugReport b WHERE b.status &lt;&gt; 'DELETED'
+            </query>
+        </named-query>
+    </entity>
+</entity-mappings>

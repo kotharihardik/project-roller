@@ -1,0 +1,767 @@
+@startuml User and Role Management Subsystem
+
+skinparam linetype ortho
+
+title Apache Roller - User and Role Management Subsystem
+
+class Permission <<external>>
+class TypedQuery <<external>>
+class Query <<external>>
+class UserDetails <<external>>
+interface LdapAuthoritiesPopulator <<external>>
+class GrantedAuthority <<external>>
+class SimpleGrantedAuthority <<external>>
+class DirContextOperations <<external>>
+class HttpServletRequest <<external>>
+class ActionSupport <<external>>
+
+package Weblog_and_content_subsystem{
+    class Weblog    
+}
+
+package "org.apache.roller.weblogger.pojos" #DDDDFF {
+    
+    class User {
+        - id: String
+        - userName: String
+        - password: String
+        - openIdUrl: String
+        - screenName: String
+        - fullName: String
+        - emailAddress: String
+        - dateCreated: Date
+        - locale: String
+        - timeZone: String
+        - enabled: Boolean
+        - activationCode: String
+        --
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getPassword(): String
+        + setPassword(password: String): void
+        + resetPassword(newPassword: String): void
+        + getOpenIdUrl(): String
+        + setOpenIdUrl(openIdUrl: String): void
+        + getScreenName(): String
+        + setScreenName(screenName: String): void
+        + getFullName(): String
+        + setFullName(fullName: String): void
+        + getEmailAddress(): String
+        + setEmailAddress(emailAddress: String): void
+        + getDateCreated(): Date
+        + setDateCreated(date: Date): void
+        + getLocale(): String
+        + setLocale(locale: String): void
+        + getTimeZone(): String
+        + setTimeZone(timeZone: String): void
+        + getEnabled(): Boolean
+        + setEnabled(enabled: Boolean): void
+        + getActivationCode(): String
+        + setActivationCode(activationCode: String): void
+        + hasGlobalPermission(action: String): boolean
+        + hasGlobalPermission(actions: List<String>): boolean
+    }
+
+    class UserRole {
+        - id: String
+        - userName: String
+        - role: String
+        --
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getRole(): String
+        + setRole(role: String): void
+    }
+
+    User "1" -- "*" UserRole : has
+
+    abstract class RollerPermission {
+        --
+        + {abstract} setActions(actions: String): void
+        + {abstract} getActions(): String
+        + getActionsAsList(): List<String>
+        + setActionsAsList(actionsList: List<String>): void
+        + hasAction(action: String): boolean
+        + hasActions(actionsToCheck: List<String>): boolean
+        + addActions(perm: ObjectPermission): void
+        + addActions(newActions: List<String>): void
+        + removeActions(actionsToRemove: List<String>): void
+        + isEmpty(): boolean
+    }
+
+    Permission <|-- RollerPermission
+
+    abstract class ObjectPermission {
+        # id: String
+        # userName: String
+        # objectType: String
+        # objectId: String
+        # pending: boolean
+        # dateCreated: Date
+        # actions: String
+        --
+        + getId(): String
+        + setId(id: String): void
+        + getActions(): String
+        + setActions(actions: String): void
+        + getUserName(): String
+        + setUserName(username: String): void
+        + getObjectId(): String
+        + setObjectId(objectId: String): void
+        + getDateCreated(): Date
+        + setDateCreated(dateCreated: Date): void
+        + isPending(): boolean
+        + setPending(pending: boolean): void
+    }
+
+    RollerPermission <|-- ObjectPermission
+
+    class GlobalPermission {
+        # actions: String
+        + {static} LOGIN: String = "login"
+        + {static} WEBLOG: String = "weblog"
+        + {static} ADMIN: String = "admin"
+        --
+        + GlobalPermission(user: User)
+        + GlobalPermission(actions: List<String>)
+        + GlobalPermission(user: User, actions: List<String>)
+        + getActions(): String
+        + setActions(actions: String): void
+        + implies(perm: Permission): boolean
+        - actionImplies(action1: String, action2: String): boolean
+    }
+
+    RollerPermission <|-- GlobalPermission
+    GlobalPermission ..> User : references
+    GlobalPermission ..> Permission : references
+
+    class WeblogPermission {
+        + {static} EDIT_DRAFT: String = "edit_draft"
+        + {static} POST: String = "post"
+        + {static} ADMIN: String = "admin"
+        + {static} ALL_ACTIONS: List<String>
+        --
+        + WeblogPermission()
+        + WeblogPermission(weblog: Weblog, user: User, actions: String)
+        + WeblogPermission(weblog: Weblog, user: User, actions: List<String>)
+        + WeblogPermission(weblog: Weblog, actions: List<String>)
+        + getWeblog(): Weblog
+        + getUser(): User
+        + implies(perm: Permission): boolean
+    }
+
+    ObjectPermission <|-- WeblogPermission
+    WeblogPermission ..> Weblog : references
+    WeblogPermission ..> User : uses
+    User "1" -- "*" WeblogPermission : has
+    Weblog "0..*" -- "1" User : owned by
+}
+
+package "org.apache.roller.weblogger.business" #FFDDDD{
+    
+    interface UserManager {
+        + addUser(newUser: User): void
+        + saveUser(user: User): void
+        + removeUser(user: User): void
+        + getUserCount(): long
+        + getUserByActivationCode(activationCode: String): User
+        + getUser(id: String): User
+        + getUserByUserName(userName: String): User
+        + getUserByUserName(userName: String, enabled: Boolean): User
+        + getUserByOpenIdUrl(openIdUrl: String): User
+        + getUsers(enabled: Boolean, startDate: Date, endDate: Date, offset: int, length: int): List<User>
+        + getUsersStartingWith(startsWith: String, enabled: Boolean, offset: int, length: int): List<User>
+        + getUserNameLetterMap(): Map<String, Long>
+        + getUsersByLetter(letter: char, offset: int, length: int): List<User>
+        --
+        + checkPermission(perm: RollerPermission, user: User): boolean
+        + grantWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + grantWeblogPermissionPending(weblog: Weblog, user: User, actions: List<String>): void
+        + confirmWeblogPermission(weblog: Weblog, user: User): void
+        + declineWeblogPermission(weblog: Weblog, user: User): void
+        + revokeWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + getWeblogPermissions(user: User): List<WeblogPermission>
+        + getPendingWeblogPermissions(user: User): List<WeblogPermission>
+        + getPendingWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + getWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + getWeblogPermission(weblog: Weblog, user: User): WeblogPermission
+        + getWeblogPermissionIncludingPending(weblog: Weblog, user: User): WeblogPermission
+        + getWeblogPermissionIncludingPending(weblog: Weblog): WeblogPermission
+        --
+        + grantRole(roleName: String, user: User): void
+        + revokeRole(roleName: String, user: User): void
+        + hasRole(roleName: String, user: User): boolean
+        + getRoles(user: User): List<String>
+        + release(): void
+    }
+
+    UserManager ..> User : manages
+    UserManager ..> RollerPermission : checks
+    UserManager ..> Weblog: manages permissions for
+    UserManager ..> WeblogPermission : creates
+}
+
+package "org.apache.roller.weblogger.business.jpa" #FFEEEE {
+    
+    class JPAUserManagerImpl {
+        - strategy: JPAPersistenceStrategy
+        - userNameToIdMap: Map<String, String>
+        --
+        + JPAUserManagerImpl(strat: JPAPersistenceStrategy)
+        + addUser(newUser: User): void
+        + saveUser(user: User): void
+        + removeUser(user: User): void
+        + getUser(id: String): User
+        + getUserByUserName(userName: String): User
+        + getUserByUserName(userName: String, enabled: Boolean): User
+        + getUserByOpenIdUrl(openIdUrl: String): User
+        + getUsers(enabled: Boolean, startDate: Date, endDate: Date, offset: int, length: int): List<User>
+        + getUsersStartingWith(startsWith: String, enabled: Boolean, offset: int, length: int): List<User>
+        + getUserNameLetterMap(): Map<String, Long>
+        + getUsersByLetter(letter: char, offset: int, length: int): List<User>
+        + getUserCount(): long
+        + getUserByActivationCode(activationCode: String): User
+        --
+        + checkPermission(perm: RollerPermission, user: User): boolean
+        + getWeblogPermission(weblog: Weblog, user: User): WeblogPermission
+        + getWeblogPermissionIncludingPending(weblog: Weblog, user: User): WeblogPermission
+        + grantWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + grantWeblogPermissionPending(weblog: Weblog, user: User, actions: List<String>): void
+        + confirmWeblogPermission(weblog: Weblog, user: User): void
+        + declineWeblogPermission(weblog: Weblog, user: User): void
+        + revokeWeblogPermission(weblog: Weblog, user: User, actions: List<String>): void
+        + getWeblogPermissions(user: User): List<WeblogPermission>
+        + getWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + getWeblogPermissionIncludingPending(weblog: Weblog): List<WeblogPermission>
+        + getPendingWeblogPermissions(user: User): List<WeblogPermission>
+        + getPendingWeblogPermissions(weblog: Weblog): List<WeblogPermission>
+        + hasRole(roleName: String, user: User): boolean
+        + getRoles(user: User): List<String>
+        + grantRole(roleName: String, user: User): void
+        + revokeRole(roleName: String, user: User): void
+        + release(): void
+    }
+
+    UserManager <|.. JPAUserManagerImpl : implements
+    JPAUserManagerImpl ..> User : manages
+    JPAUserManagerImpl ..> UserRole : manages
+    JPAUserManagerImpl ..> Weblog : manages permissions for
+    JPAUserManagerImpl ..> WeblogPermission : manages
+    JPAUserManagerImpl ..> RollerPermission : checks
+    JPAUserManagerImpl ..> GlobalPermission : creates
+
+    class JPAPersistenceStrategy {
+        + refresh(obj: Object): void
+        + flush(): void
+        + release(): void
+        + store(obj: Object): Object
+        + remove(clazz: Class, id: String): void
+        + remove(obj: Object): void
+        + removeAll(pos: Collection): void
+        + load(clazz: Class, id: String): Object
+        + getNamedQuery(name: String, clazz: Class): TypedQuery
+        + getNamedQuery(name: String): Query
+        + getNamedQueryCommitFirst(name: String, clazz: Class): TypedQuery
+        + getDynamicQuery(queryString: String, clazz: Class): TypedQuery
+        + getDynamicQuery(queryString: String): Query
+        + getNamedUpdate(name: String): Query
+    }
+    JPAPersistenceStrategy ..> TypedQuery : uses
+    JPAPersistenceStrategy ..> Query : uses
+    JPAUserManagerImpl "1" -- "1" JPAPersistenceStrategy
+}
+
+class TokenBasedRememberMeServices <<external>>
+
+package "org.apache.roller.weblogger.ui.core.security" #DDFFDD {
+    
+    class RollerUserDetailsService {
+        --
+        + loadUserByUsername(userName: String): UserDetails
+        - getAuthorities(userData: User, umgr: UserManager): List<SimpleGrantedAuthority>
+    }
+
+    interface "UserDetailsService" as SpringUDS
+    SpringUDS <|.. RollerUserDetailsService : implements
+    RollerUserDetailsService ..> UserManager : uses
+    RollerUserDetailsService ..> User : loads
+    RollerUserDetailsService ..> UserDetails : returns
+    RollerUserDetailsService ..> SimpleGrantedAuthority : creates
+
+    interface RollerUserDetails {
+        --
+        + getTimeZone(): String
+        + getLocale(): String
+        + getScreenName(): String
+        + getFullName(): String
+        + getEmailAddress(): String
+    }
+
+    RollerUserDetailsService --> RollerUserDetails : creates
+
+    interface AutoProvision {  
+        --  
+        + execute(request: HttpServletRequest): boolean  
+    }
+
+    RollerUserDetailsService ..> AutoProvision : uses
+    RollerRememberMeServices ..> RollerUserDetailsService : uses
+    RollerUserDetails -|> UserDetails
+
+    class AuthoritiesPopulator {
+        --
+        + getGrantedAuthorities(userData: DirContextOperations, username: String): Collection<GrantedAuthority>
+        + setDefaultRole(defaultRole: String): void
+    }
+
+    AuthoritiesPopulator ..|> LdapAuthoritiesPopulator : implements
+    AuthoritiesPopulator ..> DirContextOperations : uses
+    AuthoritiesPopulator ..> GrantedAuthority : returns
+
+    class CustomUserRegistry {
+        - DEFAULT_SNAME_LDAP_ATTRIBUTE : String {static, final}
+        - DEFAULT_UID_LDAP_ATTRIBUTE : String {static, final}
+        - DEFAULT_NAME_LDAP_ATTRIBUTE : String {static, final}
+        - DEFAULT_EMAIL_LDAP_ATTRIBUTE : String {static, final}
+        - DEFAULT_LOCALE_LDAP_ATTRIBUTE : String {static, final}
+        - DEFAULT_TIMEZONE_LDAP_ATTRIBUTE : String {static, final}
+        - SNAME_LDAP_PROPERTY : String {static, final}
+        - UID_LDAP_PROPERTY : String {static, final}
+        - NAME_LDAP_PROPERTY : String {static, final}
+        - EMAIL_LDAP_PROPERTY : String {static, final}
+        - LOCALE_LDAP_PROPERTY : String {static, final}
+        - TIMEZONE_LDAP_PROPERTY : String {static, final}
+        --
+        
+        + getUserDetailsFromAuthentication(request : HttpServletRequest) : User {static}
+        - getLdapAttribute(attributes : Attributes, name : String) : String {static}
+        - getRequestAttribute(request : HttpServletRequest, attributeName : String) : String {static}
+    }
+
+    CustomUserRegistry ..> User : returns
+    CustomUserRegistry ..> HttpServletRequest : uses
+    CustomUserRegistry ..> AuthMethod : checks
+    CustomUserRegistry ..> UserDetails : reads
+    CustomUserRegistry ..> RollerUserDetails : type check
+    CustomUserRegistry ..> Attributes : reads
+
+
+    BasicUserAutoProvision ..> HttpServletRequest : uses
+    BasicUserAutoProvision ..> User : uses
+
+    class RollerRememberMeServices {
+    --  
+        # makeTokenSignature(expireTime: long, username: String, password: String): String
+    }
+
+    RollerRememberMeServices -|> TokenBasedRememberMeServices : extends
+    RollerRememberMeServices ..> UserDetailsService : uses
+
+    class BasicUserAutoProvision {  
+        --  
+        + execute(request: HttpServletRequest): boolean 
+        - hasNecessaryFields(user: User): boolean 
+    }
+
+    BasicUserAutoProvision ..> HttpServletRequest : uses
+    BasicUserAutoProvision ..> User : uses
+    AutoProvision <|.. BasicUserAutoProvision : implements
+}
+
+package "org.apache.roller.weblogger.ui.struts2.admin" #DDFFFF {
+    class UserAdmin {
+        - bean: CreateUserBean
+        - authMethod: AuthMethod
+        --
+        + execute(): String
+        + edit(): String
+        + requiredGlobalPermissionActions(): List<String>
+        + isWeblogRequired(): boolean
+        + getBean(): CreateUserBean
+        + setBean(bean: CreateUserBean): void
+        + getAuthMethod(): String
+    }
+
+    UserAdmin -|> UIAction
+    UserAdmin ..> AuthMethod : uses
+    UserAdmin ..> UserManager : uses
+
+    class UserEdit {
+        - bean: CreateUserBean
+        - authMethod: AuthMethod
+        --
+        + myPrepare(): void
+        + firstSave(): String
+        + execute(): String
+        + isAdd(): boolean
+        + myValidate(): void
+        + save(): String
+        + requiredGlobalPermissionActions(): List<String>
+        + getBean(): CreateUserBean
+        + isUserEditingSelf(): boolean
+        + getPermissions(): List<WeblogPermission>
+        + getAuthMethod(): String
+        + setBean(bean: CreateUserBean): void
+    }
+
+    UserEdit --> WeblogPermission : gets
+    UserEdit -|> UIAction
+    UserEdit ..> AuthMethod : uses
+    UserEdit --> CreateUserBean : contains
+    UserEdit ..> UserManager : uses
+
+    class CreateUserBean {
+        - id: String
+        - userName: String
+        - password: String
+        - screenName: String
+        - fullName: String
+        - emailAddress: String
+        - locale: String
+        - timeZone: String
+        - openIdUrl: String
+        - enabled: Boolean
+        - activationCode: String
+        - administrator: Boolean
+        - list: List<String>
+        --
+        + getList(): List<String>
+        + setList(list: List<String>): void
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getPassword(): String
+        + setPassword(password: String): void
+        + getScreenName(): String
+        + setScreenName(screenName: String): void
+        + getFullName(): String
+        + setFullName(fullName: String): void
+        + getEmailAddress(): String
+        + setEmailAddress(emailAddress: String): void
+        + getLocale(): String
+        + setLocale(locale: String): void
+        + getTimeZone(): String
+        + setTimeZone(timeZone: String): void
+        + getOpenIdUrl(): String
+        + setOpenIdUrl(openIdUrl: String): void
+        + getEnabled(): Boolean
+        + setEnabled(enabled: Boolean): void
+        + getActivationCode(): String
+        + setActivationCode(activationCode: String): void
+        + isAdministrator(): Boolean
+        + setAdministrator(administrator: Boolean): void
+        + copyTo(user: User): void
+        + copyFrom(user: User): void
+    }
+
+    CreateUserBean ..> User : copies to/from
+    UserAdmin --> CreateUserBean : contains
+}
+
+package "org.apache.roller.weblogger.ui.struts2.core" #ddfffe {
+    class Register {  
+        - DISABLED_RETURN_CODE: String {static, final}
+        - DEFAULT_ALLOWED_CHARS: String {static, final}
+        - authMethod: AuthMethod  
+        - activationStatus: String  
+        - bean: ProfileBean  
+        - activationCode: String
+        --  
+        - isUserRequired(): boolean
+        - getAuthMethod(): String
+        + execute(): String  
+        + save(): String  
+        + retryActivationCode(mgr: UserManager, inActivationCode: String): String
+        + sendActivationMailIfNeeded(user: User, activationEnabled: boolean): void
+        + myValidate(): void
+        - preserveUsernameAndPassword(unusedPassword: String): void
+        - checkUserName(): void
+        - checkOpenID(): void
+        + activate(): String  
+        + getBean(): ProfileBean
+        + setBean(bean: ProfileBean): void
+        + getActivationStatus(): String
+        + setActivationStatus(activationStatus: String): void
+        + getActivationCode(): String
+        + setActivationCode(activationCode: String): void
+    }
+    Register -|> UIAction
+    Register --> ProfileBean : contains
+    Register ..> AuthMethod : uses
+    Register ..> UserManager : uses
+
+
+    class Login {  
+        - error: String
+        - authMethod: AuthMethod
+        --
+        + isUserRequired(): boolean
+        + getAuthMethod(): String
+        + execute(): String
+        + getError(): String
+        + setError(error: String): void
+    }  
+
+    Login -|> UIAction
+    Login ..> AuthMethod : uses
+
+    class Profile {  
+        - authMethod: AuthMethod
+        - bean: ProfileBean
+        --
+        + execute(): String
+        + save(): String
+        + myValidate(): void
+        + getAuthMethod(): String
+        + getBean(): ProfileBean
+        + setBean(bean: ProfileBean): void
+    } 
+
+    Profile -|> UIAction
+    Profile ..> AuthMethod : uses
+    Profile --> ProfileBean : contains
+
+    class MainMenu {  
+        - webSiteId: String
+        - inviteId: String
+        --  
+        + execute(): String  
+        + accept(): String  
+        + decline(): String
+        + getExistingPermissions(): List<WeblogPermission>
+        + getPendingPermissions(): List<WeblogPermission>
+        + getWebSiteId(): String
+        + setWebSiteId(webSiteId: String): void
+        + getInviteId(): String
+        + setInviteId(inviteId: String): void
+    }
+
+    MainMenu --> WeblogPermission : gets
+    MainMenu -|> UIAction
+}
+
+interface HttpParametersAware <<external>>
+
+package "org.apache.roller.weblogger.ui.struts2.editor" #FFFFDD {
+    class Members {  
+        - allPermissions: List<WeblogPermission>
+        - parameters: HttpParametersAware
+        --  
+        + execute(): String  
+        + save(): String 
+        + getParameter(key: String): String
+        + getParameters(): Map<String, String[]>
+        + setParameters(parameters: HttpParameters): void
+        + getWeblogPermissions(): List<WeblogPermission>
+    } 
+
+    Members -|> UIAction
+    Members --|> HttpParametersAware
+    Members --> WeblogPermission : manages
+
+    class MembersInvite { 
+        - userName: String  
+        - permissionString: String
+        --
+        + execute(): String  
+        + save(): String  
+        + cancel(): String
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getPermissionString(): String
+        + setPermissionString(permissionString: String): void
+    }  
+    MembersInvite -|> UIAction
+
+    class MemberResign {
+        --  
+        + requiredWeblogPermissionActions(): List<String>
+        + isWeblogRequired(): boolean
+        + execute(): String  
+        + resign(): String  
+    }
+    MemberResign -|> UIAction
+}
+
+interface HttpSessionListener <<external>>
+interface HttpSessionActivationListener <<external>>
+
+package "org.apache.roller.weblogger.ui.core" #f7ffdd {
+    class RollerSession { 
+        - serialVersionUID: long {static, final}
+        - userName: String
+        + ROLLER_SESSION: String {static, final}
+        -- 
+        + getRollerSession(request: HttpServletRequest): RollerSession  
+        + sessionCreated(event: HttpSessionEvent): void  
+        + sessionDestroyed(event: HttpSessionEvent): void
+        + sessionWillPassivate(event: HttpSessionEvent): void
+        + getAuthenticatedUser(): User  
+        + setAuthenticatedUser(user: User): void  
+        - clearSession(): void
+    }
+
+    RollerSession --|> HttpSessionListener
+    RollerSession --|> HttpSessionActivationListener
+    RollerSession ..> User : manages
+    RollerSession ..> HttpServletRequest : uses
+
+    class RollerLoginSessionManager {  
+        - CACHE_ID: String {static, final}
+        - sessionCache: Cache
+        --  
+        + getInstance(): RollerLoginSessionManager  
+        + register(userName: String, session: RollerSession): void  
+        + get(userName: String): RollerSession
+        + invalidate(userName: String): void  
+    }
+    RollerSession --> RollerLoginSessionManager : uses  
+    RollerLoginSessionManager ..> Cache : uses
+
+    class ProfileBean {  
+        - id: String
+        - userName: String
+        - password: String  
+        - screenName: String  
+        - fullName: String
+        - emailAddress: String
+        - locale: String  
+        - timeZone: String
+        - openidUrl: String  
+        - passwordText: String
+        - passwordConfirm: String
+        --  
+        + getId(): String
+        + setId(id: String): void
+        + getUserName(): String
+        + setUserName(userName: String): void
+        + getPassword(): String
+        + setPassword(password: String): void
+        + getScreenName(): String
+        + setScreenName(screenName: String): void
+        + getFullName(): String
+        + setFullName(fullName: String): void
+        + getEmailAddress(): String
+        + setEmailAddress(emailAddress: String): void
+        + getLocale(): String
+        + setLocale(locale: String): void
+        + getTimeZone(): String
+        + setTimeZone(timeZone: String): void
+        + getOpenIdUrl(): String
+        + setOpenIdUrl(openidUrl: String): void
+        + getPasswordText(): String
+        + setPasswordText(passwordText: String): void
+        + getPasswordConfirm(): String
+        + setPasswordConfirm(passwordConfirm: String): void
+        + copyTo(user: User): void  
+        + copyFrom(user: User): void  
+    }
+    ProfileBean ..> User : copies to/from
+}
+
+package "org.apache.roller.weblogger.util.cache" #ddffed {
+    interface Cache {  
+        --
+        + getId(): String
+        + put(key: String, value: Object): void
+        + get(key: String): Object  
+        + remove(key: String): void  
+        + getStats(): Map<String, Object>
+    }  
+}
+
+class MethodFilterInterceptor <<external>>
+class ActionInvocation <<external>>
+interface StrutsStatics <<external>>
+
+package "org.apache.roller.weblogger.ui.struts2.util" #ffddfd {
+    abstract class UIAction {
+        - authenticatedUser : User
+        - actionWeblog : Weblog
+        - weblog : String
+        - actionName : String
+        - desiredMenu : String
+        - pageTitle : String
+        - salt : String
+        --
+        + cancel() : String
+        + isUserRequired() : boolean
+        + isWeblogRequired() : boolean
+        + requiredWeblogPermissionActions() : List<String>
+        + requiredGlobalPermissionActions() : List<String>
+    }
+
+    UIAction -|> ActionSupport
+    UIAction --|> RequestAware
+    UIAction --|> UISecurityEnforced
+    UIAction --|> UIActionPreparable
+
+    interface UIActionPreparable {
+        --
+        + myPrepare(): void
+    }
+
+    interface UISecurityEnforced {
+        --
+        + isUserRequired(): boolean
+        + isWeblogRequired(): boolean
+        + requiredWeblogPermissionActions(): List<String>
+        + requiredGlobalPermissionActions(): List<String>
+    }
+
+    interface RequestAware <<external>>
+    UIAction ..|> UIActionPreparable
+    UIAction ..|> UISecurityEnforced
+    UIAction ..|> RequestAware
+
+    UIAction "1" -- "0..1" User : authenticatedUser
+    UIAction "1" -- "0..1" Weblog : actionWeblog
+
+    class UISecurityInterceptor {
+        - serialVersionUID: long {static, final}
+        --  
+        + doIntercept(invocation: ActionInvocation): String  
+    }
+
+    UISecurityInterceptor -|> MethodFilterInterceptor : extends
+    UISecurityInterceptor ..> UISecurityEnforced : checks
+    UISecurityInterceptor ..> ActionInvocation : uses
+    
+    class UIActionInterceptor {  
+        --  
+        + doIntercept(invocation: ActionInvocation): String  
+    }  
+    UIActionInterceptor -|> MethodFilterInterceptor : extends
+    UIActionInterceptor --|> StrutsStatics
+    UIActionInterceptor ..> ActionInvocation : uses
+    UIAction --> UISecurityEnforced : implements
+
+    interface UISecurityEnforced {  
+        --  
+        + isUserRequired(): boolean
+        + requiredWeblogPermissionActions(): List<String>  
+        + requiredGlobalPermissionActions(): List<String>  
+    }  
+}
+
+package "org.apache.roller.weblogger.config" #fff4dd {
+    enum AuthMethod {
+        ROLLERDB  
+        LDAP  
+        OPENID  
+        DB_OPENID  
+        CMA 
+        --
+        - propertyName : String
+        --
+        + getPropertyName() : String
+        + getAuthMethod() : AuthMethod
+    }
+}
+
+@enduml

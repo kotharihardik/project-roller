@@ -1,0 +1,39 @@
+# Taken from http://gary-rowe.com/agilestack/2012/10/12/a-gitignore-file-for-intellij-and-eclipse-with-maven/
+#
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+nbproject
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+logs/
+
+velocity.log
+
+tomcat-base
+docker/postgresql-data
+docker/roller-data
+assembly-release/release.sh
+
+.env
+
+it-selenium/overlays/
+
+
+./app/src/test/resources/jetty.xml
+./app/src/test/resources/roller-jettyrun.properties
+*.env

@@ -1,0 +1,48 @@
+## sidebar contents
+    <!-- sidebar -->
+    <h2>Calendar</h2>
+    <div class="sidebar">
+    #showWeblogEntryCalendar($model.weblog "nil")
+    </div>
+
+    <h2>Feeds</h2>
+    <div class="sidebar">
+    #showAtomFeedsList($model.weblog)
+    </div>
+
+    <h2>Search</h2>
+    <div class="sidebar">
+    #showWeblogSearchForm($model.weblog false)
+    </div>
+
+    <h2>Links</h2>
+    <div class="sidebar">
+    #set($defaultFolder = $model.weblog.getBookmarkFolder("/"))
+    #showBookmarkLinksList($defaultFolder)
+    </div>
+
+        <h2>Trending Blog Pages</h2>
+        <div class="sidebar">
+        #set($trendingWeblogs = $model.getTrendingWeblogs(5))
+        <ul>
+            #foreach($blog in $trendingWeblogs)
+            <li><a href="$url.absoluteSite/$blog.subjectNameShort/">$blog.subjectNameLong</a> [$blog.count]</li>
+            #end
+        </ul>
+        </div>
+
+        <h2>Trending Blog Posts</h2>
+        <div class="sidebar">
+        #set($trendingEntries = $model.getTrendingWeblogEntries(5))
+        <ul>
+            #foreach($entry in $trendingEntries)
+            <li><a href="$url.absoluteSite/$entry.weblogHandle/entry/$entry.subjectNameShort">$entry.subjectNameLong</a> [$entry.count]</li>
+            #end
+        </ul>
+        </div>
+
+    <h2>Navigation</h2>
+    <div class="sidebar">
+    #showPageMenu($model.weblog)
+    #showAuthorMenu(true)
+    </div>

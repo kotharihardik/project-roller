@@ -1,0 +1,75 @@
+<%-- filepath: app/src/main/webapp/WEB-INF/velocity/templates/notification/bug-report-created-admin.vm --%>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"/>
+<style>
+  body{margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;font-size:14px;color:#333;}
+  .wrap{max-width:620px;margin:30px auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .hdr{background:#d9534f;color:#fff;padding:20px 24px;}
+  .hdr h2{margin:0;font-size:20px;}
+  .hdr p{margin:4px 0 0;font-size:13px;opacity:.85;}
+  .body{padding:24px;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:bold;color:#fff;}
+  .sev-critical{background:#d9534f;} .sev-high{background:#e8622a;}
+  .sev-medium{background:#f0ad4e;color:#333;} .sev-low{background:#5cb85c;}
+  table.info{width:100%;border-collapse:collapse;margin:16px 0;}
+  table.info td{padding:9px 10px;border-bottom:1px solid #eee;vertical-align:top;}
+  table.info td.lbl{width:140px;font-weight:bold;color:#555;white-space:nowrap;}
+  .section{margin:18px 0;padding:14px;background:#fafafa;border-left:4px solid #d9534f;border-radius:3px;}
+  .section h4{margin:0 0 8px;color:#d9534f;font-size:13px;text-transform:uppercase;letter-spacing:.5px;}
+  .section p{margin:0;white-space:pre-wrap;line-height:1.6;}
+  .ftr{background:#f5f5f5;padding:12px 24px;font-size:11px;color:#999;border-top:1px solid #e5e5e5;text-align:center;}
+  .btn{display:inline-block;margin-top:16px;padding:10px 22px;background:#d9534f;color:#fff;text-decoration:none;border-radius:4px;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h2>New Bug Report Submitted</h2>
+    <p>A new report requires your attention on Apache Roller</p>
+  </div>
+  <div class="body">
+    <p>A new bug report has been submitted and is awaiting review.</p>
+
+    <table class="info">
+      <tr><td class="lbl">Title</td><td><strong>$report.title</strong></td></tr>
+      <tr><td class="lbl">Reporter</td>
+          <td>$report.creator.screenName &lt;$report.creator.emailAddress&gt;</td></tr>
+      <tr><td class="lbl">Category</td><td>$report.category</td></tr>
+      <tr><td class="lbl">Severity</td>
+          <td><span class="badge sev-$report.severity.toLowerCase()">$report.severity</span></td></tr>
+      <tr><td class="lbl">Status</td><td><strong>$report.status</strong></td></tr>
+      <tr><td class="lbl">Submitted</td><td>$report.createdAt</td></tr>
+      #if($report.pageUrl && $report.pageUrl != "")
+      <tr><td class="lbl">Page URL</td>
+          <td><a href="$report.pageUrl">$report.pageUrl</a></td></tr>
+      #end
+      #if($report.browserInfo && $report.browserInfo != "")
+      <tr><td class="lbl">Browser</td><td>$report.browserInfo</td></tr>
+      #end
+    </table>
+
+    #if($report.description && $report.description != "")
+    <div class="section">
+      <h4>Description</h4>
+      <p>$report.description</p>
+    </div>
+    #end
+
+    #if($report.stepsToReproduce && $report.stepsToReproduce != "")
+    <div class="section" style="border-left-color:#5bc0de;">
+      <h4>Steps to Reproduce</h4>
+      <p>$report.stepsToReproduce</p>
+    </div>
+    #end
+
+    #if($report.screenshotUrl && $report.screenshotUrl != "")
+    <p><a href="$report.screenshotUrl">View Screenshot</a></p>
+    #end
+  </div>
+  <div class="ftr">
+    Apache Roller Bug Tracker &mdash; Automated Notification &mdash; Do not reply
+  </div>
+</div>
+</body>
+</html>
